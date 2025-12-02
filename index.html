@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Advanced Medicinal Consulting</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root{
+      --bg:#020617;
+      --bg-elevated:#050816;
+      --accent-1:#22d3ee;
+      --accent-2:#6366f1;
+      --accent-3:#a855f7;
+      --accent-soft:#0ea5e9;
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+      --border:rgba(148,163,184,0.4);
+      --radius-lg:20px;
+      --radius-md:14px;
+      --max-width:1180px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at top left,#0b1120 0,#020617 55%),
+        radial-gradient(circle at bottom right,#020617 0,#000 60%);
+      color:var(--text);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+    a{text-decoration:none;color:inherit;}
+
+    main{
+      position:relative;
+      z-index:1;
+    }
+    main::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(15,23,42,0.35) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15,23,42,0.35) 1px, transparent 1px);
+      background-size:40px 40px;
+      opacity:0.35;
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    section{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:56px 20px 40px;
+      scroll-margin-top:80px;
+    }
+    h1,h2,h3{font-weight:700;}
+
+    /* HEADER */
+    header{
+      position:sticky;
+      top:0;
+      z-index:40;
+      backdrop-filter:blur(16px);
+      background:rgba(2,6,23,0.94);
+      border-bottom:1px solid rgba(148,163,184,0.4);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:12px 20px;
+    }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .brand-title{
+      font-size:14px;
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+    }
+    .brand-sub{
+      font-size:11px;
+      color:var(--muted);
+    }
+    nav{
+      display:flex;
+      gap:18px;
+      margin-right:16px;
+      font-size:13px;
+      flex-wrap:wrap;
+    }
+    nav a{
+      color:#c7d2fe;
+      letter-spacing:0.04em;
+      text-transform:uppercase;
+    }
+    nav a:hover{text-decoration:underline;}
+
+    .header-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    /* HERO */
+    .hero{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:72px 20px 52px;
+      display:grid;
+      grid-template-columns:minmax(0,1.6fr) minmax(0,1.2fr);
+      gap:36px;
+      align-items:center;
+    }
+    .hero-title{
+      font-size:34px;
+      line-height:1.12;
+      margin-bottom:16px;
+      background:linear-gradient(135deg,var(--accent-1),var(--accent-2),var(--accent-3));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .hero-lead{
+      font-size:15px;
+      color:var(--muted);
+      max-width:560px;
+      margin-bottom:18px;
+    }
+    .hero-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:22px;
+      font-size:11px;
+      color:var(--muted);
+    }
+    .badge{
+      padding:4px 10px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(148,163,184,0.45);
+    }
+
+    .hero-buttons{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .btn{
+      border:none;
+      border-radius:999px;
+      padding:10px 18px;
+      cursor:pointer;
+      font-size:14px;
+      font-weight:600;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent-1),var(--accent-3));
+      color:#020617;
+      box-shadow:0 10px 30px rgba(124,58,237,0.35);
+    }
+    .btn-primary:hover{opacity:0.96;transform:translateY(-1px);}
+    .btn-ghost{
+      background:rgba(15,23,42,0.8);
+      border:1px solid var(--border);
+      color:var(--text);
+    }
+    .btn-ghost:hover{background:#020617;}
+
+    .hero-media{
+      position:relative;
+      border-radius:var(--radius-lg);
+      overflow:hidden;
+      background:radial-gradient(circle at top,var(--accent-2) 0,transparent 60%),
+                 radial-gradient(circle at bottom,var(--accent-3) 0,transparent 55%),
+                 var(--bg-elevated);
+      border:1px solid rgba(148,163,184,0.5);
+      box-shadow:0 20px 40px rgba(15,23,42,0.9);
+    }
+    .hero-media-inner{
+      position:relative;
+      padding:14px;
+      z-index:1;
+    }
+    .hero-tag{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.14em;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+    .hero-metric-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:10px;
+    }
+    .hero-metric-title{
+      font-size:14px;
+      font-weight:600;
+    }
+    .hero-metric-sub{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .hero-panel{
+      margin-top:10px;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,0.6);
+      background:
+        radial-gradient(circle at top left,rgba(129,140,248,0.35),transparent 60%),
+        radial-gradient(circle at bottom right,rgba(45,212,191,0.25),transparent 60%),
+        rgba(15,23,42,0.96);
+      padding:12px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .hero-panel-eyebrow{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.14em;
+      color:var(--muted);
+    }
+    .hero-panel-title{
+      font-size:14px;
+      font-weight:600;
+    }
+    .hero-panel-list{
+      list-style:none;
+      padding-left:0;
+      margin:4px 0 0;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .hero-panel-list li{
+      position:relative;
+      padding-left:14px;
+      margin-bottom:4px;
+    }
+    .hero-panel-list li::before{
+      content:"•";
+      position:absolute;
+      left:0;
+      top:0;
+      color:var(--accent-soft);
+    }
+
+    /* SECTION HEADER */
+    .section-header{margin-bottom:26px;}
+    .section-eyebrow{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+    .section-title{
+      font-size:22px;
+      margin-bottom:6px;
+    }
+    .section-sub{
+      font-size:14px;
+      color:var(--muted);
+      max-width:640px;
+    }
+
+    /* CARDS */
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:20px;
+    }
+    .card{
+      background:var(--bg-elevated);
+      border-radius:var(--radius-md);
+      border:1px solid var(--border);
+      padding:16px;
+      box-shadow:0 14px 30px rgba(15,23,42,0.8);
+      position:relative;
+      overflow:hidden;
+      transition:transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:radial-gradient(circle at top left,rgba(56,189,248,0.18),transparent 60%);
+      opacity:0;
+      transition:opacity 0.25s ease;
+      pointer-events:none;
+    }
+    .card:hover{
+      transform:translateY(-3px);
+      box-shadow:0 22px 40px rgba(15,23,42,0.9);
+      border-color:rgba(56,189,248,0.9);
+    }
+    .card:hover::before{opacity:1;}
+    .card-tag{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      color:var(--muted);
+      margin-bottom:4px;
+    }
+    .card-title{
+      font-size:16px;
+      margin-bottom:6px;
+    }
+    .card p{
+      font-size:13px;
+      color:var(--muted);
+    }
+    .card-icon{
+      position:absolute;
+      top:12px;
+      right:12px;
+      font-size:18px;
+      opacity:0.6;
+    }
+
+    /* SPLIT + FLOW */
+    .split{
+      display:grid;
+      grid-template-columns:minmax(0,1.45fr) minmax(0,1.1fr);
+      gap:26px;
+      align-items:flex-start;
+    }
+    .flow{
+      border-radius:var(--radius-md);
+      border:1px solid var(--border);
+      background:var(--bg-elevated);
+      padding:16px;
+      box-shadow:0 16px 34px rgba(15,23,42,0.85);
+    }
+    .flow-step{
+      display:grid;
+      grid-template-columns:36px minmax(0,1fr);
+      gap:14px;
+      position:relative;
+      padding-bottom:12px;
+    }
+    .flow-step:not(:last-child)::after{
+      content:"";
+      position:absolute;
+      left:18px;top:26px;bottom:0;
+      width:2px;
+      background:linear-gradient(to bottom,var(--accent-1),transparent);
+      opacity:0.4;
+    }
+    .flow-index{
+      width:32px;height:32px;border-radius:999px;
+      background:radial-gradient(circle at top,var(--accent-2),var(--accent-3));
+      display:flex;align-items:center;justify-content:center;
+      font-size:13px;font-weight:600;
+      box-shadow:0 0 0 1px rgba(15,23,42,0.9),0 0 16px rgba(94,234,212,0.6);
+    }
+    .flow-title{
+      font-size:14px;
+      margin-bottom:3px;
+    }
+    .flow-text{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .meta-panel{
+      border-radius:var(--radius-md);
+      border:1px solid var(--border);
+      background:radial-gradient(circle at top,var(--accent-1) 0,transparent 55%),
+                 var(--bg-elevated);
+      padding:14px;
+      box-shadow:0 16px 32px rgba(15,23,42,0.9);
+      position:relative;
+      overflow:hidden;
+    }
+    .meta-panel::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:radial-gradient(circle at bottom,rgba(15,23,42,0.95) 0,transparent 60%);
+      opacity:0.9;
+      pointer-events:none;
+    }
+    .meta-inner{position:relative;z-index:1;}
+    .meta-label{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.14em;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+    .meta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      margin-bottom:6px;
+    }
+    .chip{
+      font-size:11px;
+      padding:4px 9px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.85);
+      border:1px solid rgba(148,163,184,0.6);
+      color:var(--text);
+    }
+    .meta-note{
+      font-size:12px;
+      color:var(--muted);
+    }
+    .meta-replace{
+      margin-top:10px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .meta-list{
+      margin:4px 0 0;
+      padding-left:16px;
+    }
+    .meta-list li{
+      margin-bottom:4px;
+    }
+
+    /* LARIFAN GRID */
+    .grid-2{
+      display:grid;
+      grid-template-columns:minmax(0,1.35fr) minmax(0,1.1fr);
+      gap:24px;
+      align-items:flex-start;
+    }
+    .visual-card{
+      border-radius:var(--radius-md);
+      border:1px solid rgba(129,140,248,0.9);
+      background:
+        radial-gradient(circle at top left,rgba(129,140,248,0.45),transparent 60%),
+        radial-gradient(circle at bottom right,rgba(45,212,191,0.35),transparent 60%),
+        var(--bg-elevated);
+      padding:14px;
+      box-shadow:0 18px 36px rgba(17,24,39,0.9);
+    }
+    .visual-label{
+      font-size:11px;
+      color:var(--muted);
+      margin-bottom:6px;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+    }
+    .visual-list{
+      margin:0 0 8px;
+      padding-left:16px;
+      font-size:13px;
+      color:var(--text);
+    }
+    .visual-list li{
+      margin-bottom:4px;
+    }
+    .tableish{
+      border-radius:var(--radius-md);
+      border:1px solid rgba(94,234,212,0.7);
+      background:
+        radial-gradient(circle at top right,rgba(56,189,248,0.35),transparent 60%),
+        var(--bg-elevated);
+      padding:12px 14px;
+      box-shadow:0 18px 36px rgba(15,23,42,0.9);
+      font-size:13px;
+    }
+    .table-row{
+      display:grid;
+      grid-template-columns:120px minmax(0,1fr);
+      gap:10px;
+      padding:6px 0;
+      border-bottom:1px solid rgba(15,23,42,0.8);
+    }
+    .table-row:last-child{border-bottom:none;}
+    .table-label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;}
+    .table-value{color:var(--text);}
+
+    /* PARTNERS */
+    .partners-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:18px;
+    }
+    .partner-card{
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      border-radius:var(--radius-md);
+      border:1px solid rgba(129,140,248,0.9);
+      background:
+        radial-gradient(circle at top left,rgba(79,70,229,0.55),transparent 60%),
+        radial-gradient(circle at bottom right,rgba(14,165,233,0.35),transparent 60%),
+        var(--bg-elevated);
+      padding:14px;
+      box-shadow:0 18px 36px rgba(15,23,42,0.95);
+      transition:transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+    }
+    .partner-card:hover{
+      transform:translateY(-3px);
+      border-color:rgba(56,189,248,1);
+      box-shadow:0 24px 46px rgba(15,23,42,0.98);
+    }
+    .partner-name{
+      font-size:15px;
+      font-weight:600;
+      margin-bottom:4px;
+    }
+    .partner-tag{
+      font-size:12px;
+      color:var(--text);
+      margin-bottom:8px;
+    }
+    .partner-link{
+      font-size:12px;
+      color:var(--accent-soft);
+    }
+
+    /* PIPELINE */
+    .pipeline{
+      border-radius:var(--radius-md);
+      border:1px solid rgba(148,163,184,0.8);
+      background:
+        radial-gradient(circle at top left,rgba(59,130,246,0.35),transparent 60%),
+        var(--bg-elevated);
+      padding:16px;
+      box-shadow:0 18px 36px rgba(15,23,42,0.9);
+    }
+    .pipe-rows{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:4px;
+    }
+    .pipe-row{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .pipe-label{
+      width:96px;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .pipe-bar-wrap{
+      flex:1;
+      height:10px;
+      border-radius:999px;
+      background:#020617;
+      border:1px solid rgba(148,163,184,0.45);
+      overflow:hidden;
+      position:relative;
+    }
+    .pipe-bar{
+      height:100%;
+      width:0;
+      background:linear-gradient(90deg,var(--accent-1),var(--accent-2),var(--accent-3));
+      border-radius:999px;
+      transition:width 0.5s ease;
+    }
+    .pipe-percent{
+      width:48px;
+      text-align:right;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .pipe-note{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:10px;
+    }
+
+    /* CONTACT */
+    .contact-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);
+      gap:22px;
+      align-items:flex-start;
+    }
+    .contact-box{
+      border-radius:var(--radius-md);
+      border:1px solid rgba(148,163,184,0.8);
+      background:
+        radial-gradient(circle at top right,rgba(56,189,248,0.28),transparent 60%),
+        var(--bg-elevated);
+      padding:16px;
+      box-shadow:0 18px 36px rgba(15,23,42,0.9);
+      font-size:13px;
+      color:var(--muted);
+    }
+    .contact-box strong{color:var(--text);}
+    .contact-list{padding-left:18px;margin:8px 0 0;}
+    .contact-list li{margin-bottom:4px;}
+
+    footer{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:10px 20px 22px;
+      font-size:12px;
+      color:var(--muted);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    /* EDITOR PANEL (TEXT) */
+    #editor-toggle{
+      position:fixed;
+      left:16px;
+      bottom:16px;
+      z-index:45;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(15,23,42,0.95);
+      color:var(--text);
+      padding:8px 14px;
+      font-size:12px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      box-shadow:0 10px 24px rgba(15,23,42,0.9);
+      display:none; /* скрытая кнопка */
+    }
+    #editor-panel{
+      position:fixed;
+      left:16px;
+      bottom:60px;
+      width:300px;
+      max-height:70vh;
+      background:#020617;
+      border-radius:16px;
+      border:1px solid var(--border);
+      box-shadow:0 18px 40px rgba(15,23,42,0.95);
+      z-index:44;
+      overflow:hidden;
+      transform:translateY(10px);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity 0.18s ease, transform 0.18s ease;
+      display:flex;
+      flex-direction:column;
+    }
+    #editor-panel.open{
+      opacity:1;
+      transform:translateY(0);
+      pointer-events:auto;
+    }
+    .editor-header{
+      padding:8px 10px;
+      border-bottom:1px solid rgba(15,23,42,1);
+      font-size:12px;
+    }
+    .editor-header h3{
+      font-size:13px;
+      margin-bottom:2px;
+    }
+    .editor-body{
+      padding:8px 10px 10px;
+      font-size:11px;
+      color:var(--muted);
+      overflow-y:auto;
+    }
+    .editor-group{margin-bottom:8px;}
+    .editor-group label{
+      display:block;
+      margin-bottom:3px;
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      color:var(--muted);
+    }
+    .editor-select{
+      width:100%;
+      padding:4px 6px;
+      border-radius:6px;
+      border:1px solid var(--border);
+      background:#020617;
+      color:var(--text);
+      font-size:11px;
+    }
+    .editor-textarea{
+      width:100%;
+      min-height:56px;
+      padding:5px 6px;
+      border-radius:6px;
+      border:1px solid var(--border);
+      background:#020617;
+      color:var(--text);
+      font-size:11px;
+      resize:vertical;
+    }
+    .editor-btn{
+      margin-top:5px;
+      padding:5px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#020617;
+      color:var(--text);
+      font-size:11px;
+      cursor:pointer;
+    }
+    .editor-btn.primary{
+      background:linear-gradient(135deg,var(--accent-1),var(--accent-3));
+      color:#020617;
+      border:none;
+      font-weight:600;
+    }
+
+    /* AI CHAT WIDGET */
+    #ai-chat-toggle{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      z-index:49;
+      border-radius:999px;
+      border:1px solid rgba(56,189,248,0.8);
+      background:radial-gradient(circle at top,#0f172a 0,#020617 50%);
+      color:var(--text);
+      padding:8px 14px;
+      font-size:13px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      box-shadow:0 12px 28px rgba(15,23,42,0.95);
+    }
+    #ai-chat-toggle .ai-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:26px;
+      height:26px;
+      border-radius:999px;
+      background:conic-gradient(from 210deg,var(--accent-1),var(--accent-2),var(--accent-3),var(--accent-1));
+      color:#020617;
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:0.06em;
+      box-shadow:0 0 0 1px rgba(15,23,42,0.9),0 0 14px rgba(56,189,248,0.9);
+    }
+    #ai-chat-toggle-text{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+    }
+    #ai-chat-toggle-text strong{
+      font-size:12px;
+    }
+    #ai-chat-toggle-text span{
+      font-size:10px;
+      color:var(--muted);
+    }
+
+    #ai-chat-window{
+      position:fixed;
+      right:16px;
+      bottom:60px;
+      width:360px;
+      max-width:100%;
+      max-height:70vh;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:#020617;
+      box-shadow:0 18px 40px rgba(15,23,42,0.95);
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+      z-index:48;
+      transform:translateY(10px);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity 0.18s ease, transform 0.18s ease;
+    }
+    #ai-chat-window.open{
+      opacity:1;
+      transform:translateY(0);
+      pointer-events:auto;
+    }
+
+    .ai-chat-header{
+      padding:10px 12px;
+      border-bottom:1px solid rgba(15,23,42,1);
+      background:radial-gradient(circle at top,var(--accent-2) 0,transparent 60%), #020617;
+      font-size:12px;
+    }
+    .ai-chat-header-title{
+      font-size:13px;
+      font-weight:600;
+    }
+    .ai-chat-header-sub{
+      font-size:11px;
+      color:var(--muted);
+      margin-top:2px;
+    }
+
+    .ai-chat-messages{
+      flex:1;
+      padding:10px 10px 8px;
+      overflow-y:auto;
+      font-size:13px;
+    }
+    .ai-msg{
+      margin-bottom:8px;
+      display:flex;
+    }
+    .ai-msg.ai-user{
+      justify-content:flex-end;
+    }
+    .ai-msg.ai-assistant{
+      justify-content:flex-start;
+    }
+    .ai-bubble{
+      max-width:80%;
+      padding:7px 9px;
+      border-radius:12px;
+      line-height:1.35;
+    }
+    .ai-user .ai-bubble{
+      background:linear-gradient(135deg,var(--accent-1),var(--accent-3));
+      color:#020617;
+      border-bottom-right-radius:4px;
+    }
+    .ai-assistant .ai-bubble{
+      background:#020617;
+      border:1px solid var(--border);
+      color:var(--text);
+      border-bottom-left-radius:4px;
+    }
+
+    .ai-chat-footer-note{
+      font-size:10px;
+      color:var(--muted);
+      padding:0 10px 6px;
+    }
+
+    .ai-chat-input{
+      padding:8px 8px 9px;
+      border-top:1px solid rgba(15,23,42,1);
+      background:#020617;
+      display:flex;
+      gap:6px;
+    }
+    .ai-chat-input textarea{
+      flex:1;
+      resize:none;
+      max-height:80px;
+      min-height:32px;
+      padding:6px 8px;
+      border-radius:8px;
+      border:1px solid var(--border);
+      background:#020617;
+      color:var(--text);
+      font-size:13px;
+    }
+    .ai-chat-input button{
+      border:none;
+      border-radius:999px;
+      padding:0 14px;
+      background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+      color:#020617;
+      font-weight:600;
+      font-size:13px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+    }
+    .ai-chat-input button:disabled{
+      opacity:0.5;
+      cursor:default;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width:900px){
+      header{
+        flex-wrap:wrap;
+        gap:8px;
+        align-items:flex-start;
+      }
+      .header-right{
+        width:100%;
+      }
+      nav{
+        display:flex;
+        flex-wrap:wrap;
+        gap:12px;
+        margin-right:0;
+        margin-top:6px;
+        font-size:12px;
+      }
+      .hero{
+        grid-template-columns:1fr;
+        padding-top:64px;
+      }
+      .hero-media{order:-1;}
+      .split,.grid-2,.contact-grid{
+        grid-template-columns:1fr;
+      }
+      #editor-panel{
+        left:8px;
+        width:260px;
+      }
+      #ai-chat-window{
+        right:8px;
+        left:8px;
+        width:auto;
+      }
+    }
+    @media (max-width:600px){
+      .hero-title{font-size:26px;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="brand-title">ADVANCED MEDICINAL CONSULTING</div>
+      <div class="brand-sub" data-edit-key="brand-sub">
+        Oncology, ATMP and biotech commercialization
+      </div>
+    </div>
+    <div class="header-right">
+      <nav aria-label="Main navigation">
+        <a href="#overview">Overview</a>
+        <a href="#dtc">DTC &amp; CIK</a>
+        <a href="#larifan">Larifan</a>
+        <a href="#partners">Partners</a>
+        <a href="#pipeline">Pipeline</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div>
+        <h1 class="hero-title" data-edit-key="hero-title">
+          From science to deployable oncology &amp; immunotherapy programs.
+        </h1>
+
+        <p class="hero-lead" data-edit-key="hero-lead">
+          Advanced Medicinal Consulting helps biotech teams and clinics architect, validate and roll out oncology,
+          ATMP, DTC/CIK cell therapy and antiviral programs in the EU and UK.
+        </p>
+
+        <div class="hero-badges">
+          <div class="badge" data-edit-key="hero-badge-1">18+ years in oncology &amp; immunology</div>
+          <div class="badge" data-edit-key="hero-badge-2">Bridging science · regulation · market</div>
+        </div>
+
+        <div class="hero-buttons">
+          <button type="button" class="btn btn-primary" onclick="location.hash='#contact'">
+            Request deck
+          </button>
+          <button type="button" class="btn btn-ghost" onclick="location.hash='#dtc'">
+            DTC &amp; CIK platform
+          </button>
+        </div>
+      </div>
+
+      <aside class="hero-media">
+        <div class="hero-media-inner">
+          <div class="hero-tag">Current focus</div>
+          <div class="hero-metric-row">
+            <div>
+              <div class="hero-metric-title" data-edit-key="hero-metric-title">
+                Oncology &amp; immune support programs
+              </div>
+              <div class="hero-metric-sub" data-edit-key="hero-metric-sub">
+                DTC/CIK cell therapy · injectable dsRNA · EU/UK pathways
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-panel">
+            <div class="hero-panel-eyebrow">Why teams work with us</div>
+            <div class="hero-panel-title" data-edit-key="hero-panel-title">
+              Evidence-driven architecture for complex programs
+            </div>
+            <ul class="hero-panel-list" data-edit-key="hero-panel-list">
+              <li>Structured program design from concept to deployment.</li>
+              <li>Regulatory-aligned frameworks for EU/UK oncology and ATMP.</li>
+              <li>Hands-on experience with DTC/CIK and dsRNA-based programs.</li>
+              <li>Focus on safety, data and realistic implementation constraints.</li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section id="overview">
+      <div class="section-header">
+        <div class="section-eyebrow">Overview</div>
+        <div class="section-title" data-edit-key="overview-title">
+          Where we create leverage for biotech teams
+        </div>
+        <div class="section-sub" data-edit-key="overview-sub">
+          We work at the intersection of medical science, regulatory strategy and commercial execution to turn assets
+          into coherent oncology and immunotherapy programs.
+        </div>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="card-icon">🧪</div>
+          <div class="card-tag">Oncology</div>
+          <div class="card-title" data-edit-key="overview-card1-title">
+            Integrated oncology program design
+          </div>
+          <p data-edit-key="overview-card1-text">
+            Clinical strategy, biomarker hypotheses, combination logic, endpoints and differentiated positioning in
+            crowded indications.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">🧬</div>
+          <div class="card-tag">ATMP</div>
+          <div class="card-title" data-edit-key="overview-card2-title">
+            Advanced therapy pathways
+          </div>
+          <p data-edit-key="overview-card2-text">
+            Cell and gene therapy development plans, risk-based CMC, early regulator dialogue and EU/UK entry strategy
+            for complex assets.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">📊</div>
+          <div class="card-tag">Portfolio</div>
+          <div class="card-title" data-edit-key="overview-card3-title">
+            From single asset to portfolio logic
+          </div>
+          <p data-edit-key="overview-card3-text">
+            Align discovery, clinical pipeline and commercial scenarios so that assets reinforce rather than compete
+            with each other.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- DTC & CIK -->
+    <section id="dtc">
+      <div class="section-header">
+        <div class="section-eyebrow">DTC &amp; CIK platform</div>
+        <div class="section-title" data-edit-key="dtc-title">
+          Structured cell therapy programs for oncology and immune support
+        </div>
+        <div class="section-sub" data-edit-key="dtc-sub">
+          We transform individual CIK protocols into scalable, compliant programs that clinics can operate and patients
+          can navigate, with clear clinical logic and operations.
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="flow">
+          <div class="flow-step">
+            <div class="flow-index">01</div>
+            <div>
+              <div class="flow-title" data-edit-key="dtc-step1-title">Program architecture</div>
+              <div class="flow-text" data-edit-key="dtc-step1-text">
+                Define indications, lines of therapy, inclusion/exclusion criteria, visit structure and endpoints for
+                DTC/CIK programs across oncology and immune support.
+              </div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-index">02</div>
+            <div>
+              <div class="flow-title" data-edit-key="dtc-step2-title">Manufacturing &amp; logistics</div>
+              <div class="flow-text" data-edit-key="dtc-step2-text">
+                Design GMP(-lite) workflows, partner network, material flows, QC, digital traceability and data capture
+                for CIK manufacturing and delivery.
+              </div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-index">03</div>
+            <div>
+              <div class="flow-title" data-edit-key="dtc-step3-title">Clinical &amp; regulatory alignment</div>
+              <div class="flow-text" data-edit-key="dtc-step3-text">
+                Align with local frameworks, structure documentation, and build a roadmap for compliant implementation
+                in EU / UK settings.
+              </div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-index">04</div>
+            <div>
+              <div class="flow-title" data-edit-key="dtc-step4-title">Patient &amp; clinician experience</div>
+              <div class="flow-text" data-edit-key="dtc-step4-text">
+                Define journey maps, consent materials, follow-up logic and transparent dashboards for outcomes and
+                safety monitoring.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="meta-panel">
+          <div class="meta-inner">
+            <div class="meta-label">Program snapshot</div>
+            <div class="meta-row">
+              <div class="chip">Autologous CIK</div>
+              <div class="chip">Oncology</div>
+              <div class="chip">Immune-compromised patients</div>
+            </div>
+            <div class="meta-row">
+              <div class="chip">EU / UK clinics</div>
+              <div class="chip">GMP / GMP-lite</div>
+            </div>
+            <div class="meta-note" data-edit-key="dtc-meta-note">
+              Ideal for clinics or networks that want a standardized, evidence-generating DTC/CIK program instead of
+              ad-hoc protocols.
+            </div>
+
+            <div class="meta-replace">
+              <div class="meta-label" style="margin-bottom:4px;">What defines a robust DTC/CIK program</div>
+              <ul class="meta-list" data-edit-key="dtc-meta-list">
+                <li>Clear indication and line-of-therapy logic.</li>
+                <li>Standardised visit structure and follow-up.</li>
+                <li>GMP / GMP-lite production with documented QC.</li>
+                <li>Traceable logistics and digital data capture.</li>
+                <li>Consistent patient and clinician experience.</li>
+                <li>Outcomes and safety monitoring built in.</li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- LARIFAN -->
+    <section id="larifan">
+      <div class="section-header">
+        <div class="section-eyebrow">Larifan injectable</div>
+        <div class="section-title" data-edit-key="larifan-title">
+          Injectable dsRNA interferon inducer as supportive therapy
+        </div>
+        <div class="section-sub" data-edit-key="larifan-sub">
+          We help position injectable Larifan as a rational antiviral and immunomodulating component in complex
+          treatment pathways, with conservative, data-aware narratives.
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="visual-card">
+          <div class="visual-label">Larifan: key biological principles</div>
+          <ul class="visual-list" data-edit-key="larifan-principles">
+            <li>dsRNA-driven interferon induction.</li>
+            <li>Activation of antiviral signalling pathways.</li>
+            <li>Immune modulation in compromised states.</li>
+            <li>Supportive role in oncology and viral disease.</li>
+          </ul>
+
+          <div class="card-title" style="margin-bottom:4px;" data-edit-key="larifan-card-title">
+            From legacy data to modern clinical context
+          </div>
+          <p style="font-size:13px;color:var(--muted);" data-edit-key="larifan-card-text1">
+            Map legacy data, immune mechanisms and clinical experience into clear use cases: oncology support, viral
+            infections, and immune restoration after intensive therapy.
+          </p>
+          <p style="font-size:13px;color:var(--muted);" data-edit-key="larifan-card-text2">
+            Build coherent, conservative narratives for regulators, clinicians and payers, without over-claiming or
+            stepping into individual treatment advice.
+          </p>
+        </div>
+
+        <aside class="tableish">
+          <div class="table-row">
+            <div class="table-label">Indications</div>
+            <div class="table-value" data-edit-key="larifan-table-indications">
+              Oncology support, viral disease, immune restoration
+            </div>
+          </div>
+          <div class="table-row">
+            <div class="table-label">Modality</div>
+            <div class="table-value" data-edit-key="larifan-table-modality">
+              Injectable dsRNA interferon inducer
+            </div>
+          </div>
+          <div class="table-row">
+            <div class="table-label">Workstreams</div>
+            <div class="table-value" data-edit-key="larifan-table-workstreams">
+              Non-clinical mapping, clinical concepts, study concepts, commercial and access scenarios.
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PARTNERS -->
+    <section id="partners">
+      <div class="section-header">
+        <div class="section-eyebrow">Partners &amp; collaborators</div>
+        <div class="section-title" data-edit-key="partners-title">
+          Selected clinical and research relationships
+        </div>
+        <div class="section-sub" data-edit-key="partners-sub">
+          We work with clinics and research organisations that combine scientific depth with pragmatic implementation in oncology and immunology.
+        </div>
+      </div>
+
+      <div class="partners-grid">
+        <a class="partner-card" href="https://www.froceth.lt/" target="_blank" rel="noopener">
+          <div>
+            <div class="partner-name" data-edit-key="partner-froceth-name">Froceth</div>
+            <div class="partner-tag" data-edit-key="partner-froceth-tag">
+              GMP manufacturing, cell banking and translational support.
+            </div>
+          </div>
+          <div class="partner-link">Open site ↗</div>
+        </a>
+
+        <a class="partner-card" href="https://pallasclinic.eu/" target="_blank" rel="noopener">
+          <div>
+            <div class="partner-name" data-edit-key="partner-pallas-name">Pallas Clinic</div>
+            <div class="partner-tag" data-edit-key="partner-pallas-tag">
+              Oncology and immunology-focused clinical practice.
+            </div>
+          </div>
+          <div class="partner-link">Open site ↗</div>
+        </a>
+
+        <a class="partner-card" href="https://larifan.eu/en/" target="_blank" rel="noopener">
+          <div>
+            <div class="partner-name" data-edit-key="partner-larifan-name">Larifan</div>
+            <div class="partner-tag" data-edit-key="partner-larifan-tag">
+              dsRNA interferon inducer platform and legacy data.
+            </div>
+          </div>
+          <div class="partner-link">Open site ↗</div>
+        </a>
+
+        <a class="partner-card" href="https://www.innovitaclinic.com/specialists/adas-darinskas/" target="_blank" rel="noopener">
+          <div>
+            <div class="partner-name" data-edit-key="partner-innovita-name">
+              Innovita Clinic · Adas Darinskas
+            </div>
+            <div class="partner-tag" data-edit-key="partner-innovita-tag">
+              Clinical expertise at the interface of oncology and immunotherapy.
+            </div>
+          </div>
+          <div class="partner-link">Open site ↗</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- PIPELINE -->
+    <section id="pipeline">
+      <div class="section-header">
+        <div class="section-eyebrow">Pipeline &amp; way of working</div>
+        <div class="section-title" data-edit-key="pipeline-title">
+          From concept to launch-ready program
+        </div>
+        <div class="section-sub" data-edit-key="pipeline-sub">
+          We plug into existing teams, respecting constraints, and move programs across four stages that combine
+          scientific, regulatory and commercial progress.
+        </div>
+      </div>
+
+      <div class="pipeline">
+        <div class="pipe-rows">
+          <div class="pipe-row">
+            <div class="pipe-label">Concept</div>
+            <div class="pipe-bar-wrap">
+              <div class="pipe-bar" data-stage="0"></div>
+            </div>
+            <div class="pipe-percent" id="pct-0">60%</div>
+          </div>
+          <div class="pipe-row">
+            <div class="pipe-label">Preclinical</div>
+            <div class="pipe-bar-wrap">
+              <div class="pipe-bar" data-stage="1"></div>
+            </div>
+            <div class="pipe-percent" id="pct-1">25%</div>
+          </div>
+          <div class="pipe-row">
+            <div class="pipe-label">Clinical</div>
+            <div class="pipe-bar-wrap">
+              <div class="pipe-bar" data-stage="2"></div>
+            </div>
+            <div class="pipe-percent" id="pct-2">10%</div>
+          </div>
+          <div class="pipe-row">
+            <div class="pipe-label">Commercial</div>
+            <div class="pipe-bar-wrap">
+              <div class="pipe-bar" data-stage="3"></div>
+            </div>
+            <div class="pipe-percent" id="pct-3">5%</div>
+          </div>
+        </div>
+        <div class="pipe-note" data-edit-key="pipeline-note">
+          Bars show a simplified distribution of where current work sits today. As projects mature, weight shifts
+          towards clinical and commercial workstreams.
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-header">
+        <div class="section-eyebrow">Contact</div>
+        <div class="section-title" data-edit-key="contact-title">
+          Let’s map your oncology or ATMP roadmap
+        </div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-box">
+          <p data-edit-key="contact-text">
+            Send a brief outline of your project, geography and time horizon. We typically respond within 1–2 business
+            days for an initial scoping conversation.
+          </p>
+          <p><strong>Email:</strong> <span data-edit-key="contact-email">hello@advanced-medicinal.example</span></p>
+          <p><strong>Regions:</strong> <span data-edit-key="contact-regions">EU · UK · Remote</span></p>
+          <button type="button" class="btn btn-primary" style="margin-top:8px"
+                  onclick="window.location.href='mailto:hello@advanced-medicinal.example'">
+            Email us
+          </button>
+        </div>
+
+        <div class="contact-box">
+          <p data-edit-key="contact-models-title">Typical collaboration models:</p>
+          <ul class="contact-list">
+            <li data-edit-key="contact-model1">
+              Strategic roadmap for a specific asset (e.g. DTC/CIK platform, injectable Larifan).
+            </li>
+            <li data-edit-key="contact-model2">
+              Regulatory and clinical design support for EU/UK entry and alignment.
+            </li>
+            <li data-edit-key="contact-model3">
+              Commercial and launch strategy with clinic and payer perspective.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>© <span id="year"></span> Advanced Medicinal Consulting</div>
+    <div data-edit-key="footer-text">
+      Built for oncology, ATMP and biotech teams.
+    </div>
+  </footer>
+
+  <!-- EDITOR PANEL (TEXT) -->
+  <button id="editor-toggle" type="button">✏️ Edit content</button>
+  <div id="editor-panel">
+    <div class="editor-header">
+      <h3>Quick editor</h3>
+      <div style="font-size:10px;color:var(--muted);">
+        Edit key texts. Changes are stored locally in this browser.
+      </div>
+    </div>
+    <div class="editor-body">
+      <div class="editor-group">
+        <label for="editorTarget">Text block</label>
+        <select id="editorTarget" class="editor-select"></select>
+      </div>
+      <div class="editor-group">
+        <label for="editorText">Text</label>
+        <textarea id="editorText" class="editor-textarea"></textarea>
+        <button id="editorSave" type="button" class="editor-btn primary">Save text</button>
+      </div>
+
+      <div class="editor-group">
+        <button id="editorReset" type="button" class="editor-btn">Reset all</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI CHAT WIDGET -->
+  <button id="ai-chat-toggle" type="button">
+    <span class="ai-badge">AI</span>
+    <span id="ai-chat-toggle-text">
+      <strong>DTC/CIK &amp; Larifan AI</strong>
+      <span>Domain consultant · Info only</span>
+    </span>
+  </button>
+
+  <div id="ai-chat-window" aria-label="AI assistant chat">
+    <div class="ai-chat-header">
+      <div class="ai-chat-header-title">
+        DTC/CIK &amp; Larifan AI consultant
+      </div>
+      <div class="ai-chat-header-sub">
+        Domain assistant · Informational only · Not a substitute for medical advice
+      </div>
+    </div>
+
+    <div class="ai-chat-messages" id="aiChatMessages"></div>
+
+    <div class="ai-chat-footer-note">
+      Focus: DTC/CIK cell therapy programs and injectable Larifan. Informational only, not individual treatment advice.
+    </div>
+
+    <div class="ai-chat-input">
+      <textarea id="aiChatInput"
+                placeholder="Ask about DTC/CIK programs or Larifan..."
+                rows="1"></textarea>
+      <button id="aiChatSend" type="button">Send</button>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var STORAGE_KEY = 'amc-editor-en-v4';
+      var pipeline = [60,25,10,5];
+
+      function loadStorage(){
+        try{
+          var raw = localStorage.getItem(STORAGE_KEY);
+          if(!raw) return {texts:{}, pipeline:null};
+          var data = JSON.parse(raw);
+          if(!data.texts) data.texts = {};
+          return data;
+        }catch(e){
+          return {texts:{}, pipeline:null};
+        }
+      }
+      function saveStorage(data){
+        try{
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }catch(e){}
+      }
+
+      function getElementByEditKey(key){
+        return document.querySelector('[data-edit-key="'+key+'"]');
+      }
+
+      function renderPipeline(){
+        pipeline.forEach(function(p, i){
+          var bar = document.querySelector('.pipe-bar[data-stage="'+i+'"]');
+          var pctEl = document.getElementById('pct-'+i);
+          if(bar) bar.style.width = p + '%';
+          if(pctEl) pctEl.textContent = p + '%';
+        });
+      }
+
+      function applyStoredContent(){
+        var data = loadStorage();
+
+        Object.keys(data.texts).forEach(function(key){
+          var el = getElementByEditKey(key);
+          if(el) el.textContent = data.texts[key];
+        });
+
+        if(Array.isArray(data.pipeline) && data.pipeline.length === 4){
+          pipeline = data.pipeline.map(function(v){return parseInt(v,10) || 0;});
+        }
+      }
+
+      function initEditorTextSelect(){
+        var select = document.getElementById('editorTarget');
+        if(!select) return;
+        select.innerHTML = '';
+        var nodes = document.querySelectorAll('[data-edit-key]');
+        nodes.forEach(function(el){
+          var key = el.getAttribute('data-edit-key');
+          if(!key) return;
+          var opt = document.createElement('option');
+          opt.value = key;
+          opt.textContent = key;
+          select.appendChild(opt);
+        });
+      }
+
+      function loadEditorText(){
+        var select = document.getElementById('editorTarget');
+        var textarea = document.getElementById('editorText');
+        if(!select || !textarea) return;
+        var key = select.value;
+        var el = getElementByEditKey(key);
+        if(!el){
+          textarea.value = '';
+          return;
+        }
+        textarea.value = el.textContent.trim();
+      }
+
+      function saveEditorText(){
+        var select = document.getElementById('editorTarget');
+        var textarea = document.getElementById('editorText');
+        if(!select || !textarea) return;
+        var key = select.value;
+        var el = getElementByEditKey(key);
+        if(!el) return;
+        var txt = textarea.value;
+        el.textContent = txt;
+
+        var data = loadStorage();
+        data.texts[key] = txt;
+        saveStorage(data);
+      }
+
+      function initEditorPanel(){
+        var toggle       = document.getElementById('editor-toggle');
+        var panel        = document.getElementById('editor-panel');
+        var textSelect   = document.getElementById('editorTarget');
+        var textSaveBtn  = document.getElementById('editorSave');
+        var resetBtn     = document.getElementById('editorReset');
+
+        if(!panel) return;
+
+        if(toggle){
+          toggle.addEventListener('click', function(){
+            panel.classList.toggle('open');
+          });
+        }
+
+        document.addEventListener('keydown', function(e){
+          if(e.ctrlKey && e.shiftKey && (e.key === 'E' || e.key === 'e')){
+            e.preventDefault();
+            panel.classList.toggle('open');
+          }
+        });
+
+        if(textSelect){
+          textSelect.addEventListener('change', loadEditorText);
+        }
+        if(textSaveBtn){
+          textSaveBtn.addEventListener('click', saveEditorText);
+        }
+        if(resetBtn){
+          resetBtn.addEventListener('click', function(){
+            localStorage.removeItem(STORAGE_KEY);
+            location.reload();
+          });
+        }
+      }
+
+      function initAIChat(){
+        var toggleBtn  = document.getElementById('ai-chat-toggle');
+        var chatWindow = document.getElementById('ai-chat-window');
+        var messagesEl = document.getElementById('aiChatMessages');
+        var inputEl    = document.getElementById('aiChatInput');
+        var sendBtn    = document.getElementById('aiChatSend');
+        var isOpen     = false;
+
+        if(!toggleBtn || !chatWindow || !messagesEl || !inputEl || !sendBtn) return;
+
+        function addMessage(role, text){
+          var wrap = document.createElement('div');
+          wrap.className = 'ai-msg ai-' + role;
+          var bubble = document.createElement('div');
+          bubble.className = 'ai-bubble';
+          bubble.textContent = text;
+          wrap.appendChild(bubble);
+          messagesEl.appendChild(wrap);
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        function fakeAIAnswer(userText){
+          var base = 'This is a demo reply from a domain AI consultant for DTC/CIK programs and injectable Larifan. In production this will call a backend with a fixed domain prompt. You asked: ';
+          return base + '"' + userText + '"';
+        }
+
+        function sendMessage(){
+          var text = (inputEl.value || '').trim();
+          if(!text) return;
+          addMessage('user', text);
+          inputEl.value = '';
+          sendBtn.disabled = true;
+
+          setTimeout(function(){
+            var reply = fakeAIAnswer(text);
+            addMessage('assistant', reply);
+            sendBtn.disabled = false;
+          }, 500);
+        }
+
+        function toggleChat(){
+          isOpen = !isOpen;
+          chatWindow.classList.toggle('open', isOpen);
+        }
+
+        addMessage(
+          'assistant',
+          'Hi! I am a domain AI consultant focused on DTC/CIK programs and injectable Larifan. I provide informational answers only and do not replace medical consultation.'
+        );
+
+        toggleBtn.addEventListener('click', toggleChat);
+        sendBtn.addEventListener('click', sendMessage);
+        inputEl.addEventListener('keydown', function(e){
+          if(e.key === 'Enter' && !e.shiftKey){
+            e.preventDefault();
+            sendMessage();
+          }
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', function(){
+        applyStoredContent();
+        renderPipeline();
+
+        initEditorTextSelect();
+        loadEditorText();
+        initEditorPanel();
+        initAIChat();
+
+        var yearEl = document.getElementById('year');
+        if(yearEl){ yearEl.textContent = new Date().getFullYear(); }
+      });
+    })();
+  </script>
+</body>
+</html>
