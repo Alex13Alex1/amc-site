@@ -1540,7 +1540,7 @@
           });
         }
       }
-
+      /* AI CHAT */
       function initAIChat(){
         var toggleBtn  = document.getElementById('ai-chat-toggle');
         var chatWindow = document.getElementById('ai-chat-window');
@@ -1562,23 +1562,36 @@
           messagesEl.scrollTop = messagesEl.scrollHeight;
         }
 
-        function fakeAIAnswer(userText){
-          var base = 'This is a demo reply from a domain AI consultant for DTC/CIK programs and injectable Larifan. In production this will call a backend with a fixed domain prompt. You asked: ';
-          return base + '"' + userText + '"';
+        async function callBackend(userText){
+          try{
+            var res = await fetch('/.netlify/functions/chat', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({ message: userText })
+            });
+
+            if(!res.ok){
+              return 'The AI backend is temporarily unavailable. Please try again later.';
+            }
+
+            var data = await res.json();
+            return data.reply || 'AI returned an empty reply.';
+          }catch(e){
+            console.error(e);
+            return 'Network error while contacting the AI backend.';
+          }
         }
 
-        function sendMessage(){
+        async function sendMessage(){
           var text = (inputEl.value || '').trim();
           if(!text) return;
           addMessage('user', text);
           inputEl.value = '';
           sendBtn.disabled = true;
 
-          setTimeout(function(){
-            var reply = fakeAIAnswer(text);
-            addMessage('assistant', reply);
-            sendBtn.disabled = false;
-          }, 500);
+          var reply = await callBackend(text);
+          addMessage('assistant', reply);
+          sendBtn.disabled = false;
         }
 
         function toggleChat(){
@@ -1586,13 +1599,14 @@
           chatWindow.classList.toggle('open', isOpen);
         }
 
+        // welcome message
         addMessage(
           'assistant',
           'Hi! I am a domain AI consultant focused on DTC/CIK programs and injectable Larifan. I provide informational answers only and do not replace medical consultation.'
         );
 
         toggleBtn.addEventListener('click', toggleChat);
-        sendBtn.addEventListener('click', sendMessage);
+        sendBtn.addEventListener('click', function(){ sendMessage(); });
         inputEl.addEventListener('keydown', function(e){
           if(e.key === 'Enter' && !e.shiftKey){
             e.preventDefault();
@@ -1617,3 +1631,4 @@
   </script>
 </body>
 </html>
+
