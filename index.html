@@ -304,7 +304,7 @@
       padding:16px;
       box-shadow:0 14px 30px rgba(15,23,42,0.8);
       position:relative;
-      overflow:hidden;
+      overflow:visible;
       transition:transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
     }
     .card::before{
@@ -321,62 +321,58 @@
       box-shadow:0 22px 40px rgba(15,23,42,0.9);
       border-color:rgba(56,189,248,0.9);
     }
-    .card-with-popup{
+    .card-detailing{
       overflow:visible;
     }
-    .card-popup{
-      position:absolute;
-      top:calc(100% + 14px);
-      left:50%;
-      transform:translate(-50%,8px);
-      width:min(360px, calc(100vw - 40px));
-      max-height:420px;
+    .card-reveal{
+      margin-top:14px;
       border-radius:var(--radius-md);
-      border:1px solid rgba(148,163,184,0.85);
-      background:#030817;
-      box-shadow:0 28px 50px rgba(3,7,18,0.9);
-      padding:18px 20px 20px;
-      color:var(--text);
-      line-height:1.45;
+      border:1px solid rgba(148,163,184,0.9);
+      background:#050a1c;
+      box-shadow:0 26px 46px rgba(5,10,28,0.9);
+      padding:18px;
       opacity:0;
+      max-height:0;
+      overflow:hidden;
       pointer-events:none;
-      transition:opacity 0.2s ease, transform 0.2s ease;
-      z-index:30;
-      overflow-y:auto;
+      transition:max-height 0.28s ease, opacity 0.25s ease, margin-top 0.2s ease;
     }
-    .card-with-popup:hover .card-popup,
-    .card-with-popup:focus-within .card-popup{
+    .card-detailing:hover .card-reveal,
+    .card-detailing:focus-within .card-reveal{
       opacity:1;
-      transform:translate(-50%,0);
+      max-height:900px;
       pointer-events:auto;
+      margin-top:18px;
     }
-    .card-popup h4{
+    .card-reveal h4{
       font-size:16px;
       margin-bottom:8px;
       color:#dbeafe;
     }
-    .card-popup p{
+    .card-reveal p{
       font-size:13px;
       color:var(--muted);
+      line-height:1.5;
       margin-bottom:10px;
     }
-    .card-popup-section{
-      margin-bottom:10px;
+    .card-reveal-section{
+      margin-bottom:12px;
     }
-    .card-popup-section-title{
+    .card-reveal-section-title{
       font-size:11px;
       text-transform:uppercase;
-      letter-spacing:0.1em;
+      letter-spacing:0.08em;
       color:var(--accent-soft);
       margin-bottom:4px;
     }
-    .card-popup ul{
+    .card-reveal ul{
       padding-left:16px;
       margin:0;
       font-size:12px;
       color:var(--text);
+      line-height:1.4;
     }
-    .card-popup li{
+    .card-reveal li{
       margin-bottom:4px;
     }
     .card:hover::before{opacity:1;}
