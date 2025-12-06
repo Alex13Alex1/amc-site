@@ -99,6 +99,10 @@
       text-transform:uppercase;
     }
     nav a:hover{text-decoration:underline;}
+    nav a.active{
+      color:#fef9c3;
+      text-decoration:underline;
+    }
 
     .header-right{
       display:flex;
@@ -1817,6 +1821,54 @@
         });
       }
 
+      function initSectionHighlight(){
+        var navLinks = Array.prototype.slice.call(document.querySelectorAll('header nav a[href^="#"]'));
+        if(!navLinks.length) return;
+
+        var linkMap = {};
+        navLinks.forEach(function(link){
+          var targetId = (link.getAttribute('href') || '').slice(1);
+          var section = document.getElementById(targetId);
+          if(section){
+            linkMap[targetId] = link;
+          }
+        });
+
+        var activeLink = null;
+        function setActive(link){
+          if(activeLink === link) return;
+          navLinks.forEach(function(l){ l.classList.remove('active'); });
+          if(link){
+            link.classList.add('active');
+            activeLink = link;
+          }
+        }
+
+        var observer = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if(entry.isIntersecting){
+              var link = linkMap[entry.target.id];
+              if(link){
+                setActive(link);
+              }
+            }
+          });
+        }, {
+          rootMargin: '-45% 0px -50% 0px',
+          threshold: 0
+        });
+
+        Object.keys(linkMap).forEach(function(id){
+          observer.observe(document.getElementById(id));
+        });
+
+        // default active for initial view
+        var firstSectionLink = linkMap[Object.keys(linkMap)[0]];
+        if(firstSectionLink){
+          setActive(firstSectionLink);
+        }
+      }
+
       function initCardDetailPanel(){
         var panel = document.getElementById('card-detail-panel');
         var cards = document.querySelectorAll('.card[data-detail="true"]');
@@ -1988,6 +2040,7 @@
         initEditorPanel();
         initNavToggle();
         initCardDetailPanel();
+        initSectionHighlight();
         initAIChat();
 
         var yearEl = document.getElementById('year');
