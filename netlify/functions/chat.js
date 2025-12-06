@@ -1,16 +1,27 @@
 // netlify/functions/chat.js
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const CORS_HEADERS = {
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+};
 
 exports.handler = async function (event) {
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 204,
+      headers: CORS_HEADERS,
+      body: '',
+    };
+  }
+
   // Разрешаем только POST
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
+      headers: CORS_HEADERS,
       body: JSON.stringify({ error: 'Method Not Allowed' }),
     };
   }
@@ -19,26 +30,28 @@ exports.handler = async function (event) {
     console.error('Missing OPENAI_API_KEY env var');
     return {
       statusCode: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
+      headers: CORS_HEADERS,
       body: JSON.stringify({ error: 'Server is not configured (no API key).' }),
     };
   }
 
   try {
-    const body = JSON.parse(event.body || '{}');
+    let body;
+    try {
+      body = JSON.parse(event.body || '{}');
+    } catch (parseErr) {
+      return {
+        statusCode: 400,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ error: 'Invalid JSON payload' }),
+      };
+    }
     const userMessage = (body.message || '').toString().trim();
 
     if (!userMessage) {
       return {
         statusCode: 400,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': 'Content-Type',
-        },
+        headers: CORS_HEADERS,
         body: JSON.stringify({ error: 'Empty message' }),
       };
     }
@@ -61,7 +74,7 @@ Guidelines:
     const apiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -79,10 +92,7 @@ Guidelines:
       console.error('OpenAI API error:', apiResponse.status, errText);
       return {
         statusCode: 502,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
+        headers: CORS_HEADERS,
         body: JSON.stringify({
           error: 'Upstream AI error',
         }),
@@ -96,20 +106,14 @@ Guidelines:
 
     return {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
+      headers: CORS_HEADERS,
       body: JSON.stringify({ reply }),
     };
   } catch (err) {
     console.error('Function error:', err);
     return {
       statusCode: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
+      headers: CORS_HEADERS,
       body: JSON.stringify({ error: 'Unexpected server error' }),
     };
   }
