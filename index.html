@@ -321,68 +321,52 @@
       box-shadow:0 22px 40px rgba(15,23,42,0.9);
       border-color:rgba(56,189,248,0.9);
     }
-    .card-hoverable{
-      overflow:visible;
-    }
-    .card-hover-panel{
-      position:absolute;
-      top:calc(100% + 12px);
-      left:50%;
-      transform:translate(-50%,8px);
-      width:min(320px, calc(100vw - 40px));
-      min-height:120px;
+    .card-detail-panel{
+      margin-top:24px;
       border-radius:var(--radius-md);
-      border:1px solid rgba(148,163,184,0.85);
-      background:radial-gradient(circle at top left,rgba(79,70,229,0.4),transparent 60%),rgba(2,6,23,0.96);
-      box-shadow:0 24px 48px rgba(15,23,42,0.95);
-      opacity:0;
-      pointer-events:none;
-      transition:opacity 0.18s ease, transform 0.18s ease;
-      z-index:30;
-      padding:16px 18px;
-      color:var(--text);
+      border:1px solid rgba(148,163,184,0.9);
+      background:radial-gradient(circle at top left,rgba(59,130,246,0.25),transparent 60%),rgba(2,6,23,0.98);
+      padding:22px 24px;
+      box-shadow:0 24px 50px rgba(15,23,42,0.92);
+      display:none;
+      max-height:440px;
       overflow-y:auto;
-      max-height:360px;
-      border-top:1px solid rgba(125,211,252,0.5);
     }
-    .card-hoverable:hover .card-hover-panel,
-    .card-hoverable:focus-within .card-hover-panel{
-      opacity:1;
-      pointer-events:auto;
-      transform:translate(-50%,0);
+    .card-detail-panel.active{
+      display:block;
     }
-    .card-hover-title{
-      font-size:15px;
-      font-weight:600;
-      margin-bottom:6px;
-      color:#cbd5f5;
+    .card-detail-panel h4{
+      font-size:18px;
+      margin-bottom:8px;
+      color:#dbeafe;
     }
-    .card-hover-lead{
-      font-size:13px;
+    .card-detail-panel p{
+      font-size:14px;
       color:var(--muted);
-      margin-bottom:10px;
-      line-height:1.4;
+      line-height:1.5;
+      margin-bottom:12px;
     }
-    .card-hover-section{
-      margin-bottom:10px;
+    .card-detail-section{
+      margin-bottom:14px;
     }
-    .card-hover-section-title{
+    .card-detail-section-title{
       font-size:12px;
       text-transform:uppercase;
-      letter-spacing:0.08em;
+      letter-spacing:0.1em;
       color:var(--accent-soft);
-      margin-bottom:4px;
+      margin-bottom:6px;
     }
-    .card-hover-list{
-      padding-left:16px;
+    .card-detail-panel ul{
+      padding-left:18px;
       margin:0;
-      font-size:12px;
       color:var(--text);
+      font-size:13px;
+      line-height:1.4;
     }
-    .card-hover-list li{
-      margin-bottom:4px;
-      line-height:1.35;
+    .card-detail-panel li{
+      margin-bottom:5px;
     }
+    .card-detail-template{display:none;}
     .card:hover::before{opacity:1;}
     .card-tag{
       font-size:11px;
@@ -1145,7 +1129,7 @@
       </div>
 
       <div class="cards">
-        <article class="card card-hoverable">
+        <article class="card" data-detail="true">
           <div class="card-icon">🧪</div>
           <div class="card-tag">Oncology</div>
           <div class="card-title" data-edit-key="overview-card1-title">
@@ -1155,58 +1139,53 @@
             Clinical strategy, biomarker hypotheses, combination logic, endpoints and differentiated positioning in
             crowded indications.
           </p>
-          <div class="card-hover-panel" role="dialog" aria-label="Integrated oncology program design details">
-            <div class="card-hover-title">Integrated Oncology Program Design</div>
-            <p class="card-hover-lead">
-              We help biotech teams bridge promising science with deployable oncology programs—making clear choices about
-              who the therapy serves, what endpoints regulators trust, and how the story stands out in crowded indications.
+          <div class="card-detail-template" aria-hidden="true">
+            <h4>Integrated Oncology Program Design</h4>
+            <p>
+              We help biotech teams move from hypothesis to deployable oncology programs—choosing the patients, endpoints
+              and positioning that regulators and payers will actually embrace.
             </p>
-
-            <div class="card-hover-section">
-              <div class="card-hover-section-title">Clinical Development Logic</div>
-              <ul class="card-hover-list">
-                <li>Indication selection driven by unmet need, competition and true differentiation.</li>
-                <li>Patient selection criteria and biomarker hypotheses that reinforce your clinical narrative.</li>
-                <li>Combination strategies that balance scientific rationale with commercial defensibility.</li>
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">Clinical Development Logic</div>
+              <ul>
+                <li>Indication selection driven by unmet need, competition and differentiation.</li>
+                <li>Patient criteria and biomarker hypotheses that strengthen the clinical narrative.</li>
+                <li>Combination strategies that remain both scientifically rational and commercially defensible.</li>
                 <li>Endpoint packages aligned with EMA/MHRA expectations and HTA evidence needs.</li>
               </ul>
             </div>
-
-            <div class="card-hover-section">
-              <div class="card-hover-section-title">Competitive Positioning</div>
-              <ul class="card-hover-list">
-                <li>Map standard-of-care and fast followers to expose real whitespace.</li>
-                <li>Highlight patient segments, therapy lines or combos others overlook.</li>
-                <li>Frame positioning that avoids unwinnable head-to-head comparisons.</li>
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">Competitive Positioning</div>
+              <ul>
+                <li>Map standard-of-care and emerging competitors to expose real whitespace.</li>
+                <li>Highlight segments, therapy lines or combo opportunities others ignore.</li>
+                <li>Build narratives that avoid unwinnable head-to-head battles.</li>
               </ul>
             </div>
-
-            <div class="card-hover-section">
-              <div class="card-hover-section-title">Regulatory &amp; Payer Alignment</div>
-              <ul class="card-hover-list">
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">Regulatory &amp; Payer Alignment</div>
+              <ul>
                 <li>Trial architectures that satisfy EMA/MHRA and deliver payer-ready data.</li>
-                <li>Explicit mitigation of safety, comparator or endpoint objections.</li>
-                <li>Narratives tuned for early scientific advice and HTA consultations.</li>
+                <li>Anticipate objections—safety, comparator choice, endpoint relevance—before filings.</li>
+                <li>Prepare evidence arcs for early scientific advice and HTA consultations.</li>
               </ul>
             </div>
-
-            <div class="card-hover-section">
-              <div class="card-hover-section-title">From Hypothesis to IND</div>
-              <ul class="card-hover-list">
-                <li>Integrate preclinical, CMC and clinical workstreams into a single regulatory arc.</li>
-                <li>Risk-based path: expose potential show-stoppers while there is time to adjust.</li>
-                <li>Timeline/resource view so teams know what must happen now versus later.</li>
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">From Hypothesis to IND</div>
+              <ul>
+                <li>Integrate preclinical, CMC and clinical work into a single regulatory narrative.</li>
+                <li>Risk-based planning that surfaces show-stoppers while you can still adjust.</li>
+                <li>Pragmatic timelines so teams know what must happen now versus later.</li>
               </ul>
             </div>
-
-            <p class="card-hover-lead" style="margin-bottom:0;">
-              Why it matters: oncology programs usually fail when design, positioning or evidence don’t match expectations.
-              We force the hard choices early so every workstream builds toward approval and adoption—not just more data.
+            <p style="margin-bottom:0;">
+              Why it matters: oncology programs often fail because design and positioning don’t match expectations.
+              We force the hard decisions early so evidence, regulation and commercial logic stay aligned.
             </p>
           </div>
         </article>
 
-        <article class="card card-hoverable">
+        <article class="card" data-detail="true">
           <div class="card-icon">🧬</div>
           <div class="card-tag">ATMP</div>
           <div class="card-title" data-edit-key="overview-card2-title">
@@ -1216,10 +1195,22 @@
             Cell and gene therapy development plans, risk-based CMC, early regulator dialogue and EU/UK entry strategy
             for complex assets.
           </p>
-          <div class="card-hover-panel" role="presentation" aria-hidden="true"></div>
+          <div class="card-detail-template" aria-hidden="true">
+            <h4>Advanced Therapy Pathways</h4>
+            <p>
+              We structure cell and gene therapy programs so GMP readiness, regulatory dialogue and commercialization
+              move in lockstep instead of as separate tracks.
+            </p>
+            <ul>
+              <li>Risk-based CMC plans that balance innovation with inspection readiness.</li>
+              <li>Manufacturing network design, logistics and release testing tuned for EU/UK pathways.</li>
+              <li>Early regulator conversations that de-risk novel modalities and endpoints.</li>
+              <li>Launch strategies connecting compassionate-use, early access and payer evidence.</li>
+            </ul>
+          </div>
         </article>
 
-        <article class="card card-hoverable">
+        <article class="card" data-detail="true">
           <div class="card-icon">📊</div>
           <div class="card-tag">Portfolio</div>
           <div class="card-title" data-edit-key="overview-card3-title">
@@ -1229,9 +1220,22 @@
             Align discovery, clinical pipeline and commercial scenarios so that assets reinforce rather than compete
             with each other.
           </p>
-          <div class="card-hover-panel" role="presentation" aria-hidden="true"></div>
+          <div class="card-detail-template" aria-hidden="true">
+            <h4>From Single Asset to Portfolio Logic</h4>
+            <p>
+              We align discovery, clinical and commercial plans so each asset strengthens the broader story instead of
+              fighting for the same resources or patients.
+            </p>
+            <ul>
+              <li>Scenario planning that reveals cannibalization risks across indications.</li>
+              <li>Evidence packages that reuse data sensibly instead of duplicating cost.</li>
+              <li>Sequencing of launches to keep manufacturing, regulatory and market access synchronized.</li>
+            </ul>
+          </div>
         </article>
       </div>
+
+      <div id="card-detail-panel" class="card-detail-panel" aria-live="polite"></div>
     </section>
 
     <!-- DTC & CIK -->
@@ -1748,6 +1752,28 @@
         });
       }
 
+      function initCardDetailPanel(){
+        var panel = document.getElementById('card-detail-panel');
+        if(!panel) return;
+        var cards = document.querySelectorAll('.card[data-detail="true"]');
+        if(!cards.length) return;
+
+        function showCard(card){
+          var template = card.querySelector('.card-detail-template');
+          if(!template) return;
+          panel.innerHTML = template.innerHTML;
+          panel.classList.add('active');
+        }
+
+        cards.forEach(function(card, idx){
+          card.addEventListener('mouseenter', function(){ showCard(card); });
+          card.addEventListener('focusin', function(){ showCard(card); });
+          card.addEventListener('click', function(){ showCard(card); });
+        });
+
+        showCard(cards[0]);
+      }
+
       /* AI CHAT */
       function initAIChat(){
         var toggleBtn  = document.getElementById('ai-chat-toggle');
@@ -1866,6 +1892,7 @@
         loadEditorText();
         initEditorPanel();
         initNavToggle();
+        initCardDetailPanel();
         initAIChat();
 
         var yearEl = document.getElementById('year');
