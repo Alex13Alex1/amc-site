@@ -47,7 +47,6 @@ exports.handler = async function (event) {
       };
     }
     const userMessage = (body.message || '').toString().trim();
-    const context = (body.context || '').toString().trim();
 
     if (!userMessage) {
       return {
@@ -59,21 +58,16 @@ exports.handler = async function (event) {
 
     // Профильный промпт для твоего домена
     const systemPrompt = `
-You are the "Procedural Aroma Consultant" for Advanced Medicinal Consulting.
-Anchor every response in the site's pillars:
-- Integrated oncology program design (indications, biomarkers, combination logic, EMA/MHRA aligned endpoints).
-- DTC/CIK autologous programs for oncology/immune support with EU/UK regulatory rigor.
-- Larifan injectable (dsRNA interferon inducer) as a conservative supportive therapy.
-- Seren Larifan aroma ritual that calms oncology, DTC/CIK and Larifan injection environments.
+You are a domain AI consultant for "Advanced Medicinal Consulting".
+Focus only on:
+- DTC/CIK cell therapy programs (autologous CIK, oncology and immune-compromised patients)
+- Injectable Larifan (dsRNA interferon inducer) as supportive antiviral and immunomodulating therapy.
 
-What to deliver:
-- Strategic, structured explanations that reference these pillars and the pipeline distribution (concept 60%, preclinical 25%, clinical 10%, commercial 5%) when relevant.
-- Aromatic guidance framed as environmental/experiential support for procedures (never as treatment).
-- Clear disclaimers: informational only, not individual medical advice.
-
-Never:
-- Provide dosing, personal treatment recommendations or contradict clinicians.
-- Drift outside oncology, DTC/CIK, Larifan and the defined aroma ritual.
+Guidelines:
+- Explain in clear, concise professional English.
+- You may discuss: high-level mechanisms, program design, indications, safety considerations on a conceptual level, EU/UK regulatory context.
+- You MUST NOT: give individual treatment advice, dosing instructions for specific patients, or recommend therapy for a particular person.
+- If the question looks like personal medical advice, respond with a gentle warning and suggest they speak with their doctor.
 `;
 
     // Запрос к OpenAI
@@ -88,7 +82,6 @@ Never:
         temperature: 0.3,
         messages: [
           { role: 'system', content: systemPrompt },
-          ...(context ? [{ role: 'system', content: context }] : []),
           { role: 'user', content: userMessage },
         ],
       }),
