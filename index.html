@@ -339,12 +339,49 @@
       pointer-events:none;
       transition:opacity 0.18s ease, transform 0.18s ease;
       z-index:30;
+      padding:16px 18px;
+      color:var(--text);
+      overflow-y:auto;
+      max-height:360px;
+      border-top:1px solid rgba(125,211,252,0.5);
     }
     .card-hoverable:hover .card-hover-panel,
     .card-hoverable:focus-within .card-hover-panel{
       opacity:1;
       pointer-events:auto;
       transform:translate(-50%,0);
+    }
+    .card-hover-title{
+      font-size:15px;
+      font-weight:600;
+      margin-bottom:6px;
+      color:#cbd5f5;
+    }
+    .card-hover-lead{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:10px;
+      line-height:1.4;
+    }
+    .card-hover-section{
+      margin-bottom:10px;
+    }
+    .card-hover-section-title{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      color:var(--accent-soft);
+      margin-bottom:4px;
+    }
+    .card-hover-list{
+      padding-left:16px;
+      margin:0;
+      font-size:12px;
+      color:var(--text);
+    }
+    .card-hover-list li{
+      margin-bottom:4px;
+      line-height:1.35;
     }
     .card:hover::before{opacity:1;}
     .card-tag{
@@ -1118,7 +1155,55 @@
             Clinical strategy, biomarker hypotheses, combination logic, endpoints and differentiated positioning in
             crowded indications.
           </p>
-          <div class="card-hover-panel" role="presentation" aria-hidden="true"></div>
+          <div class="card-hover-panel" role="dialog" aria-label="Integrated oncology program design details">
+            <div class="card-hover-title">Integrated Oncology Program Design</div>
+            <p class="card-hover-lead">
+              We help biotech teams bridge promising science with deployable oncology programs—making clear choices about
+              who the therapy serves, what endpoints regulators trust, and how the story stands out in crowded indications.
+            </p>
+
+            <div class="card-hover-section">
+              <div class="card-hover-section-title">Clinical Development Logic</div>
+              <ul class="card-hover-list">
+                <li>Indication selection driven by unmet need, competition and true differentiation.</li>
+                <li>Patient selection criteria and biomarker hypotheses that reinforce your clinical narrative.</li>
+                <li>Combination strategies that balance scientific rationale with commercial defensibility.</li>
+                <li>Endpoint packages aligned with EMA/MHRA expectations and HTA evidence needs.</li>
+              </ul>
+            </div>
+
+            <div class="card-hover-section">
+              <div class="card-hover-section-title">Competitive Positioning</div>
+              <ul class="card-hover-list">
+                <li>Map standard-of-care and fast followers to expose real whitespace.</li>
+                <li>Highlight patient segments, therapy lines or combos others overlook.</li>
+                <li>Frame positioning that avoids unwinnable head-to-head comparisons.</li>
+              </ul>
+            </div>
+
+            <div class="card-hover-section">
+              <div class="card-hover-section-title">Regulatory &amp; Payer Alignment</div>
+              <ul class="card-hover-list">
+                <li>Trial architectures that satisfy EMA/MHRA and deliver payer-ready data.</li>
+                <li>Explicit mitigation of safety, comparator or endpoint objections.</li>
+                <li>Narratives tuned for early scientific advice and HTA consultations.</li>
+              </ul>
+            </div>
+
+            <div class="card-hover-section">
+              <div class="card-hover-section-title">From Hypothesis to IND</div>
+              <ul class="card-hover-list">
+                <li>Integrate preclinical, CMC and clinical workstreams into a single regulatory arc.</li>
+                <li>Risk-based path: expose potential show-stoppers while there is time to adjust.</li>
+                <li>Timeline/resource view so teams know what must happen now versus later.</li>
+              </ul>
+            </div>
+
+            <p class="card-hover-lead" style="margin-bottom:0;">
+              Why it matters: oncology programs usually fail when design, positioning or evidence don’t match expectations.
+              We force the hard choices early so every workstream builds toward approval and adoption—not just more data.
+            </p>
+          </div>
         </article>
 
         <article class="card card-hoverable">
