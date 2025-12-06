@@ -397,6 +397,64 @@
       opacity:0.6;
     }
 
+    /* AROMA */
+    .aroma-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);
+      gap:24px;
+      align-items:stretch;
+    }
+    .aroma-panel,
+    .aroma-notes{
+      border-radius:var(--radius-md);
+      border:1px solid rgba(148,163,184,0.9);
+      background:var(--bg-elevated);
+      padding:18px;
+      box-shadow:0 18px 38px rgba(15,23,42,0.85);
+    }
+    .aroma-panel h3{
+      font-size:18px;
+      margin-bottom:10px;
+    }
+    .aroma-panel p{
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.5;
+      margin-bottom:10px;
+    }
+    .aroma-element{
+      margin-bottom:14px;
+    }
+    .aroma-element strong{
+      display:block;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:0.1em;
+      color:var(--accent-soft);
+      margin-bottom:4px;
+    }
+    .note-list{
+      list-style:none;
+      padding-left:0;
+      margin:0;
+      font-size:13px;
+      color:var(--text);
+    }
+    .note-list li{
+      margin-bottom:4px;
+    }
+    .aroma-notes h4{
+      font-size:15px;
+      margin-bottom:8px;
+      color:#dbeafe;
+    }
+    .aroma-guidance{
+      font-size:13px;
+      color:var(--muted);
+      margin-top:10px;
+      line-height:1.45;
+    }
+
     /* SPLIT + FLOW */
     .split{
       display:grid;
@@ -1054,6 +1112,7 @@
       </button>
       <nav aria-label="Main navigation">
         <a href="#overview">Overview</a>
+        <a href="#aroma">Aroma</a>
         <a href="#dtc">DTC &amp; CIK</a>
         <a href="#larifan">Larifan</a>
         <a href="#partners">Partners</a>
@@ -1302,6 +1361,63 @@
         </article>
       </div>
       <div id="card-detail-panel" class="card-detail-panel" aria-live="polite" tabindex="-1"></div>
+    </section>
+
+    <!-- AROMA -->
+    <section id="aroma">
+      <div class="section-header">
+        <div class="section-eyebrow">Procedural aroma</div>
+        <div class="section-title" data-edit-key="aroma-title">
+          Seren Larifan supportive aroma companion
+        </div>
+        <div class="section-sub" data-edit-key="aroma-sub">
+          A sensory ritual that calms treatment rooms, pairs with injection protocols and reinforces the disciplined
+          oncology and Larifan narratives present throughout this site.
+        </div>
+      </div>
+
+      <div class="aroma-grid">
+        <article class="aroma-panel">
+          <h3 data-edit-key="aroma-panel-title">Sensory intent</h3>
+          <p data-edit-key="aroma-panel-text">
+            Seren Larifan is formulated for oncology suites, DTC/CIK lounges and Larifan injection rooms. It anchors the
+            space with clean botanicals, keeps the air calm before procedures and fades into subtle warmth post-injection.
+          </p>
+          <div class="aroma-element">
+            <strong>Ritual moments</strong>
+            <p data-edit-key="aroma-ritual">
+              Diffuse lightly 10 minutes before patients enter, reinforce after consent, and keep a micro-dose in
+              post-procedure bays to maintain continuity.
+            </p>
+          </div>
+          <div class="aroma-element">
+            <strong>Pairing cues</strong>
+            <p data-edit-key="aroma-pairing">
+              Works alongside Larifan positioning decks, transparency dashboards and the structured oncology program
+              briefings your teams already use.
+            </p>
+          </div>
+        </article>
+
+        <aside class="aroma-notes">
+          <h4 data-edit-key="aroma-notes-title">Note architecture</h4>
+          <ul class="note-list">
+            <li data-edit-key="aroma-note-top"><strong>Top:</strong> cold-pressed bergamot, alpine mint</li>
+            <li data-edit-key="aroma-note-heart"><strong>Heart:</strong> neroli, blue cypress, hinoki hints</li>
+            <li data-edit-key="aroma-note-base"><strong>Base:</strong> clean amber accord, soft cedar, sterile musk</li>
+          </ul>
+          <div class="aroma-element" style="margin-top:12px;">
+            <strong>Intended effect</strong>
+            <p data-edit-key="aroma-effect">
+              Quiet confidence; a bridge between clinical precision and patient-centric warmth.
+            </p>
+          </div>
+          <p class="aroma-guidance" data-edit-key="aroma-guidance">
+            Always verify sensitivities, keep diffusion below clinical thresholds, and treat aromatics as a supportive,
+            non-invasive layer.
+          </p>
+        </aside>
+      </div>
     </section>
 
     <!-- DTC & CIK -->
@@ -1642,8 +1758,8 @@
   <button id="ai-chat-toggle" type="button">
     <span class="ai-badge">AI</span>
     <span id="ai-chat-toggle-text">
-      <strong>DTC/CIK &amp; Larifan AI</strong>
-      <span>Domain consultant · Info only</span>
+      <strong>Procedural Aroma AI</strong>
+      <span>Oncology · DTC/CIK · Larifan</span>
     </span>
   </button>
 
@@ -1668,7 +1784,7 @@
 
     <div class="ai-chat-input">
       <textarea id="aiChatInput"
-                placeholder="Ask about DTC/CIK programs or Larifan..."
+                placeholder="Ask about oncology, DTC/CIK, Larifan or procedural aromas..."
                 rows="1"></textarea>
       <button id="aiChatSend" type="button">Send</button>
     </div>
@@ -1678,6 +1794,21 @@
     (function(){
       var STORAGE_KEY = 'amc-editor-en-v5';
       var pipeline = [60,25,10,5];
+      var SITE_CONTEXT = [
+        'SITE PROGRAM PILLARS:',
+        '- Oncology program design: indications, biomarkers, combination logic, EMA/MHRA aligned endpoints.',
+        '- DTC/CIK platform: autologous CIK workflows, GMP/GMP-lite manufacturing, EU/UK clinic deployment.',
+        '- Larifan injectable: dsRNA interferon inducer used as supportive therapy with conservative narratives.',
+        '- Pipeline balance: Concept 60%, Preclinical 25%, Clinical 10%, Commercial 5%.',
+        '',
+        'AROMA COMPANION:',
+        'Seren Larifan ritual; top notes cold bergamot & alpine mint, heart neroli/blue cypress/hinoki, base clean amber & sterile musk.',
+        'Use in oncology suites, DTC/CIK lounges, Larifan injection rooms as calming, non-medical layer; verify sensitivities.',
+        '',
+        'GUIDANCE:',
+        'Always stay informational, reference oncology/DTC/CIK/Larifan contexts, integrate aroma suggestions as supportive rituals.',
+        'Never provide dosing or personal medical advice; remind users to consult clinicians.'
+      ].join('\\n');
 
       function loadStorage(){
         try{
@@ -1902,7 +2033,7 @@
             var res = await fetch(aiEndpoint, {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({ message: userText })
+              body: JSON.stringify({ message: userText, context: SITE_CONTEXT })
             });
 
             if(!res.ok){
@@ -1954,7 +2085,7 @@
         // welcome message
         addMessage(
           'assistant',
-          'Hi! I am a domain AI consultant focused on DTC/CIK programs and injectable Larifan. I provide informational answers only and do not replace medical consultation.'
+          'Hi! I am the Procedural Aroma consultant for Advanced Medicinal Consulting—grounded in oncology, DTC/CIK platforms, Larifan injections and the Seren Larifan aroma ritual. I share informational guidance only; please consult clinicians for medical decisions.'
         );
 
         toggleBtn.addEventListener('click', toggleChat);
