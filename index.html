@@ -1645,6 +1645,7 @@
         var inputEl    = document.getElementById('aiChatInput');
         var sendBtn    = document.getElementById('aiChatSend');
         var isOpen     = false;
+        var isSending  = false;
 
         if(!toggleBtn || !chatWindow || !messagesEl || !inputEl || !sendBtn) return;
 
@@ -1680,15 +1681,21 @@
         }
 
         async function sendMessage(){
+          if(isSending) return;
           var text = (inputEl.value || '').trim();
           if(!text) return;
           addMessage('user', text);
           inputEl.value = '';
+          isSending = true;
           sendBtn.disabled = true;
 
-          var reply = await callBackend(text);
-          addMessage('assistant', reply);
-          sendBtn.disabled = false;
+          try{
+            var reply = await callBackend(text);
+            addMessage('assistant', reply);
+          } finally {
+            isSending = false;
+            sendBtn.disabled = false;
+          }
         }
 
         function openChat(){
@@ -1724,6 +1731,7 @@
         inputEl.addEventListener('keydown', function(e){
           if(e.key === 'Enter' && !e.shiftKey){
             e.preventDefault();
+            if(isSending) return;
             sendMessage();
           }
         });
