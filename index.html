@@ -321,6 +321,31 @@
       box-shadow:0 22px 40px rgba(15,23,42,0.9);
       border-color:rgba(56,189,248,0.9);
     }
+    .card-hoverable{
+      overflow:visible;
+    }
+    .card-hover-panel{
+      position:absolute;
+      top:calc(100% + 12px);
+      left:50%;
+      transform:translate(-50%,8px);
+      width:min(320px, calc(100vw - 40px));
+      min-height:120px;
+      border-radius:var(--radius-md);
+      border:1px solid rgba(148,163,184,0.85);
+      background:radial-gradient(circle at top left,rgba(79,70,229,0.4),transparent 60%),rgba(2,6,23,0.96);
+      box-shadow:0 24px 48px rgba(15,23,42,0.95);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity 0.18s ease, transform 0.18s ease;
+      z-index:30;
+    }
+    .card-hoverable:hover .card-hover-panel,
+    .card-hoverable:focus-within .card-hover-panel{
+      opacity:1;
+      pointer-events:auto;
+      transform:translate(-50%,0);
+    }
     .card:hover::before{opacity:1;}
     .card-tag{
       font-size:11px;
@@ -1083,7 +1108,7 @@
       </div>
 
       <div class="cards">
-        <article class="card">
+        <article class="card card-hoverable">
           <div class="card-icon">🧪</div>
           <div class="card-tag">Oncology</div>
           <div class="card-title" data-edit-key="overview-card1-title">
@@ -1093,6 +1118,7 @@
             Clinical strategy, biomarker hypotheses, combination logic, endpoints and differentiated positioning in
             crowded indications.
           </p>
+          <div class="card-hover-panel" role="presentation" aria-hidden="true"></div>
         </article>
 
         <article class="card">
