@@ -321,52 +321,64 @@
       box-shadow:0 22px 40px rgba(15,23,42,0.9);
       border-color:rgba(56,189,248,0.9);
     }
-    .card-detail-panel{
-      margin-top:24px;
+    .card-with-popup{
+      overflow:visible;
+    }
+    .card-popup{
+      position:absolute;
+      top:calc(100% + 14px);
+      left:50%;
+      transform:translate(-50%,8px);
+      width:min(360px, calc(100vw - 40px));
+      max-height:420px;
       border-radius:var(--radius-md);
-      border:1px solid rgba(148,163,184,0.9);
-      background:radial-gradient(circle at top left,rgba(59,130,246,0.25),transparent 60%),rgba(2,6,23,0.98);
-      padding:22px 24px;
-      box-shadow:0 24px 50px rgba(15,23,42,0.92);
-      display:none;
-      max-height:440px;
+      border:1px solid rgba(148,163,184,0.85);
+      background:#030817;
+      box-shadow:0 28px 50px rgba(3,7,18,0.9);
+      padding:18px 20px 20px;
+      color:var(--text);
+      line-height:1.45;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity 0.2s ease, transform 0.2s ease;
+      z-index:30;
       overflow-y:auto;
     }
-    .card-detail-panel.active{
-      display:block;
+    .card-with-popup:hover .card-popup,
+    .card-with-popup:focus-within .card-popup{
+      opacity:1;
+      transform:translate(-50%,0);
+      pointer-events:auto;
     }
-    .card-detail-panel h4{
-      font-size:18px;
+    .card-popup h4{
+      font-size:16px;
       margin-bottom:8px;
       color:#dbeafe;
     }
-    .card-detail-panel p{
-      font-size:14px;
+    .card-popup p{
+      font-size:13px;
       color:var(--muted);
-      line-height:1.5;
-      margin-bottom:12px;
+      margin-bottom:10px;
     }
-    .card-detail-section{
-      margin-bottom:14px;
+    .card-popup-section{
+      margin-bottom:10px;
     }
-    .card-detail-section-title{
-      font-size:12px;
+    .card-popup-section-title{
+      font-size:11px;
       text-transform:uppercase;
       letter-spacing:0.1em;
       color:var(--accent-soft);
-      margin-bottom:6px;
+      margin-bottom:4px;
     }
-    .card-detail-panel ul{
-      padding-left:18px;
+    .card-popup ul{
+      padding-left:16px;
       margin:0;
+      font-size:12px;
       color:var(--text);
-      font-size:13px;
-      line-height:1.4;
     }
-    .card-detail-panel li{
-      margin-bottom:5px;
+    .card-popup li{
+      margin-bottom:4px;
     }
-    .card-detail-template{display:none;}
     .card:hover::before{opacity:1;}
     .card-tag{
       font-size:11px;
@@ -1129,7 +1141,7 @@
       </div>
 
       <div class="cards">
-        <article class="card" data-detail="true">
+        <article class="card card-with-popup">
           <div class="card-icon">🧪</div>
           <div class="card-tag">Oncology</div>
           <div class="card-title" data-edit-key="overview-card1-title">
@@ -1139,53 +1151,53 @@
             Clinical strategy, biomarker hypotheses, combination logic, endpoints and differentiated positioning in
             crowded indications.
           </p>
-          <div class="card-detail-template" aria-hidden="true">
+          <div class="card-popup" role="dialog" aria-label="Integrated oncology program design details">
             <h4>Integrated Oncology Program Design</h4>
             <p>
-              We help biotech teams move from hypothesis to deployable oncology programs—choosing the patients, endpoints
-              and positioning that regulators and payers will actually embrace.
+              We help biotech teams move from hypothesis to deployable programs—choosing patients, endpoints and
+              positioning regulators and payers will actually embrace.
             </p>
-            <div class="card-detail-section">
-              <div class="card-detail-section-title">Clinical Development Logic</div>
+            <div class="card-popup-section">
+              <div class="card-popup-section-title">Clinical Development Logic</div>
               <ul>
                 <li>Indication selection driven by unmet need, competition and differentiation.</li>
-                <li>Patient criteria and biomarker hypotheses that strengthen the clinical narrative.</li>
-                <li>Combination strategies that remain both scientifically rational and commercially defensible.</li>
-                <li>Endpoint packages aligned with EMA/MHRA expectations and HTA evidence needs.</li>
+                <li>Patient criteria and biomarker hypotheses that reinforce the clinical narrative.</li>
+                <li>Combination strategies that stay scientifically rational and commercially defensible.</li>
+                <li>Endpoints aligned with EMA/MHRA expectations and HTA requirements.</li>
               </ul>
             </div>
-            <div class="card-detail-section">
-              <div class="card-detail-section-title">Competitive Positioning</div>
+            <div class="card-popup-section">
+              <div class="card-popup-section-title">Competitive Positioning</div>
               <ul>
-                <li>Map standard-of-care and emerging competitors to expose real whitespace.</li>
-                <li>Highlight segments, therapy lines or combo opportunities others ignore.</li>
-                <li>Build narratives that avoid unwinnable head-to-head battles.</li>
+                <li>Map standard-of-care and emerging competitors to expose whitespace.</li>
+                <li>Highlight segments, lines or combinations others overlook.</li>
+                <li>Frame positioning that avoids unwinnable head-to-head battles.</li>
               </ul>
             </div>
-            <div class="card-detail-section">
-              <div class="card-detail-section-title">Regulatory &amp; Payer Alignment</div>
+            <div class="card-popup-section">
+              <div class="card-popup-section-title">Regulatory &amp; Payer Alignment</div>
               <ul>
-                <li>Trial architectures that satisfy EMA/MHRA and deliver payer-ready data.</li>
-                <li>Anticipate objections—safety, comparator choice, endpoint relevance—before filings.</li>
-                <li>Prepare evidence arcs for early scientific advice and HTA consultations.</li>
+                <li>Architect trials that satisfy EMA/MHRA and deliver payer-ready data.</li>
+                <li>Anticipate objections—safety, comparator choice, endpoint relevance.</li>
+                <li>Prepare narratives for scientific advice and HTA consultations.</li>
               </ul>
             </div>
-            <div class="card-detail-section">
-              <div class="card-detail-section-title">From Hypothesis to IND</div>
+            <div class="card-popup-section">
+              <div class="card-popup-section-title">From Hypothesis to IND</div>
               <ul>
-                <li>Integrate preclinical, CMC and clinical work into a single regulatory narrative.</li>
-                <li>Risk-based planning that surfaces show-stoppers while you can still adjust.</li>
-                <li>Pragmatic timelines so teams know what must happen now versus later.</li>
+                <li>Integrate preclinical, CMC and clinical work into one regulatory story.</li>
+                <li>Risk-based planning to surface potential show-stoppers early.</li>
+                <li>Timelines that clarify what must happen now versus later.</li>
               </ul>
             </div>
             <p style="margin-bottom:0;">
-              Why it matters: oncology programs often fail because design and positioning don’t match expectations.
-              We force the hard decisions early so evidence, regulation and commercial logic stay aligned.
+              Why it matters: oncology programs fail when design, positioning or evidence misalign.
+              We force the hard decisions early so every stream builds toward approval and adoption.
             </p>
           </div>
         </article>
 
-        <article class="card" data-detail="true">
+        <article class="card card-with-popup">
           <div class="card-icon">🧬</div>
           <div class="card-tag">ATMP</div>
           <div class="card-title" data-edit-key="overview-card2-title">
@@ -1195,22 +1207,37 @@
             Cell and gene therapy development plans, risk-based CMC, early regulator dialogue and EU/UK entry strategy
             for complex assets.
           </p>
-          <div class="card-detail-template" aria-hidden="true">
+          <div class="card-popup" role="dialog" aria-label="Advanced therapy pathways details">
             <h4>Advanced Therapy Pathways</h4>
             <p>
-              We structure cell and gene therapy programs so GMP readiness, regulatory dialogue and commercialization
-              move in lockstep instead of as separate tracks.
+              We keep CMC, regulatory and commercialization tracks synchronized so cell and gene therapy programs stay
+              deployable—not just scientifically elegant.
             </p>
-            <ul>
-              <li>Risk-based CMC plans that balance innovation with inspection readiness.</li>
-              <li>Manufacturing network design, logistics and release testing tuned for EU/UK pathways.</li>
-              <li>Early regulator conversations that de-risk novel modalities and endpoints.</li>
-              <li>Launch strategies connecting compassionate-use, early access and payer evidence.</li>
-            </ul>
+            <div class="card-popup-section">
+              <div class="card-popup-section-title">Risk-Based CMC</div>
+              <ul>
+                <li>Design GMP/GMP-lite flows, analytics and release testing tuned for inspections.</li>
+                <li>Model supply, logistics and comparability plans for autologous products.</li>
+              </ul>
+            </div>
+            <div class="card-popup-section">
+              <div class="card-popup-section-title">Regulatory Dialogue</div>
+              <ul>
+                <li>Prep early EMA/MHRA conversations to de-risk novel modalities and endpoints.</li>
+                <li>Translate scientific claims into conservative, defensible briefing materials.</li>
+              </ul>
+            </div>
+            <div class="card-popup-section">
+              <div class="card-popup-section-title">Commercial Readiness</div>
+              <ul>
+                <li>Align compassionate use, early access and payer evidence strategies.</li>
+                <li>Sequence manufacturing scale-up with launch markets and partner demand.</li>
+              </ul>
+            </div>
           </div>
         </article>
 
-        <article class="card" data-detail="true">
+        <article class="card card-with-popup">
           <div class="card-icon">📊</div>
           <div class="card-tag">Portfolio</div>
           <div class="card-title" data-edit-key="overview-card3-title">
@@ -1220,7 +1247,7 @@
             Align discovery, clinical pipeline and commercial scenarios so that assets reinforce rather than compete
             with each other.
           </p>
-          <div class="card-detail-template" aria-hidden="true">
+          <div class="card-popup" role="dialog" aria-label="Portfolio architecture details">
             <h4>Portfolio Architecture: From Single Asset to Portfolio Logic</h4>
             <p>
               Core idea: most biotech teams run each asset in isolation. As the portfolio grows, assets start competing
@@ -1228,8 +1255,8 @@
               instead of fragmenting effort.
             </p>
 
-            <div class="card-detail-section">
-              <div class="card-detail-section-title">Strategic Asset Alignment</div>
+            <div class="card-popup-section">
+              <div class="card-popup-section-title">Strategic Asset Alignment</div>
               <ul>
                 <li>Map overlaps and synergies: shared mechanisms, patient populations, combination potential.</li>
                 <li>Prioritize the order of play—what launches first, what follows, what can be deferred or out-licensed.</li>
@@ -1237,8 +1264,8 @@
               </ul>
             </div>
 
-            <div class="card-detail-section">
-              <div class="card-detail-section-title">From Discovery to Commercialization</div>
+            <div class="card-popup-section">
+              <div class="card-popup-section-title">From Discovery to Commercialization</div>
               <ul>
                 <li>Link discovery programs to the clinical pipeline as backups for potential failures.</li>
                 <li>Plan trials with commercial scenarios in mind—partnerships, IPO, acquisition.</li>
@@ -1246,8 +1273,8 @@
               </ul>
             </div>
 
-            <div class="card-detail-section">
-              <div class="card-detail-section-title">Building a Coherent Narrative</div>
+            <div class="card-popup-section">
+              <div class="card-popup-section-title">Building a Coherent Narrative</div>
               <ul>
                 <li>Craft a unified platform story for investors—expansion logic instead of a list of unrelated assets.</li>
                 <li>Clarify which assets attract pharma vs specialty biotech partners.</li>
@@ -1255,8 +1282,8 @@
               </ul>
             </div>
 
-            <div class="card-detail-section">
-              <div class="card-detail-section-title">Combination Logic</div>
+            <div class="card-popup-section">
+              <div class="card-popup-section-title">Combination Logic</div>
               <ul>
                 <li>Plan intra-portfolio combinations and align them with standard of care.</li>
                 <li>Structure IP and regulatory strategies for combination paths.</li>
@@ -1264,8 +1291,8 @@
               </ul>
             </div>
 
-            <div class="card-detail-section">
-              <div class="card-detail-section-title">Scenario Planning</div>
+            <div class="card-popup-section">
+              <div class="card-popup-section-title">Scenario Planning</div>
               <ul>
                 <li>Define outcomes when lead assets succeed or fail and how the portfolio responds.</li>
                 <li>List exit options—sale, licensing, independent development—for each asset.</li>
@@ -1280,8 +1307,6 @@
           </div>
         </article>
       </div>
-
-      <div id="card-detail-panel" class="card-detail-panel" aria-live="polite"></div>
     </section>
 
     <!-- DTC & CIK -->
@@ -1798,28 +1823,6 @@
         });
       }
 
-      function initCardDetailPanel(){
-        var panel = document.getElementById('card-detail-panel');
-        if(!panel) return;
-        var cards = document.querySelectorAll('.card[data-detail="true"]');
-        if(!cards.length) return;
-
-        function showCard(card){
-          var template = card.querySelector('.card-detail-template');
-          if(!template) return;
-          panel.innerHTML = template.innerHTML;
-          panel.classList.add('active');
-        }
-
-        cards.forEach(function(card, idx){
-          card.addEventListener('mouseenter', function(){ showCard(card); });
-          card.addEventListener('focusin', function(){ showCard(card); });
-          card.addEventListener('click', function(){ showCard(card); });
-        });
-
-        showCard(cards[0]);
-      }
-
       /* AI CHAT */
       function initAIChat(){
         var toggleBtn  = document.getElementById('ai-chat-toggle');
@@ -1938,7 +1941,6 @@
         loadEditorText();
         initEditorPanel();
         initNavToggle();
-        initCardDetailPanel();
         initAIChat();
 
         var yearEl = document.getElementById('year');
