@@ -988,7 +988,7 @@
     }
   </style>
 </head>
-<body>
+<body data-ai-endpoint="/.netlify/functions/chat">
   <header>
     <div class="brand">
       <div class="brand-title">ADVANCED MEDICINAL CONSULTING</div>
@@ -1660,9 +1660,11 @@
           messagesEl.scrollTop = messagesEl.scrollHeight;
         }
 
+        var aiEndpoint = (document.body && document.body.getAttribute('data-ai-endpoint')) || '/.netlify/functions/chat';
+
         async function callBackend(userText){
           try{
-            var res = await fetch('/.netlify/functions/chat', {
+            var res = await fetch(aiEndpoint, {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({ message: userText })
