@@ -99,6 +99,10 @@
       text-transform:uppercase;
     }
     nav a:hover{text-decoration:underline;}
+    nav a.active{
+      color:#fef9c3;
+      text-decoration:underline;
+    }
 
     .header-right{
       display:flex;
@@ -304,7 +308,7 @@
       padding:16px;
       box-shadow:0 14px 30px rgba(15,23,42,0.8);
       position:relative;
-      overflow:hidden;
+      overflow:visible;
       transition:transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
     }
     .card::before{
@@ -321,6 +325,58 @@
       box-shadow:0 22px 40px rgba(15,23,42,0.9);
       border-color:rgba(56,189,248,0.9);
     }
+    .card-detail-panel{
+      margin-top:26px;
+      border-radius:var(--radius-md);
+      border:1px solid rgba(148,163,184,0.9);
+      background:#040a19;
+      box-shadow:0 30px 60px rgba(4,10,25,0.95);
+      opacity:0;
+      max-height:0;
+      overflow:hidden;
+      overflow-y:auto;
+      pointer-events:none;
+      padding:0 24px;
+      transition:max-height 0.35s ease, opacity 0.25s ease, padding 0.25s ease;
+    }
+    .card-detail-panel.active{
+      opacity:1;
+      pointer-events:auto;
+      max-height:1000px;
+      padding:24px 24px 26px;
+    }
+    .card-detail-panel h4{
+      font-size:18px;
+      margin-bottom:8px;
+      color:#dbeafe;
+    }
+    .card-detail-panel p{
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.5;
+      margin-bottom:12px;
+    }
+    .card-detail-section{
+      margin-bottom:14px;
+    }
+    .card-detail-section-title{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:0.1em;
+      color:var(--accent-soft);
+      margin-bottom:6px;
+    }
+    .card-detail-panel ul{
+      padding-left:18px;
+      margin:0;
+      color:var(--text);
+      font-size:13px;
+      line-height:1.4;
+    }
+    .card-detail-panel li{
+      margin-bottom:5px;
+    }
+    .card-detail-template{display:none;}
     .card:hover::before{opacity:1;}
     .card-tag{
       font-size:11px;
@@ -806,27 +862,26 @@
 
     #ai-chat-window{
       position:fixed;
-      right:16px;
-      bottom:60px;
-      width:360px;
-      max-width:100%;
-      max-height:70vh;
+      left:50%;
+      top:50%;
+      width:min(420px, calc(100% - 32px));
+      max-height:78vh;
       border-radius:16px;
       border:1px solid var(--border);
       background:#020617;
-      box-shadow:0 18px 40px rgba(15,23,42,0.95);
+      box-shadow:0 28px 60px rgba(15,23,42,0.95);
       display:flex;
       flex-direction:column;
       overflow:hidden;
       z-index:48;
-      transform:translateY(10px) scale(0.96);
+      transform:translate(-50%, calc(-50% + 24px)) scale(0.94);
       opacity:0;
       pointer-events:none;
-      transition:opacity 0.18s ease, transform 0.18s ease;
+      transition:opacity 0.2s ease, transform 0.2s ease;
     }
     #ai-chat-window.open{
       opacity:1;
-      transform:translateY(0) scale(1);
+      transform:translate(-50%, -50%) scale(1);
       pointer-events:auto;
     }
 
@@ -914,14 +969,15 @@
     .ai-chat-input textarea{
       flex:1;
       resize:none;
-      max-height:80px;
-      min-height:32px;
-      padding:6px 8px;
-      border-radius:8px;
+      max-height:140px;
+      min-height:56px;
+      padding:10px 12px;
+      border-radius:10px;
       border:1px solid var(--border);
       background:#020617;
       color:var(--text);
       font-size:13px;
+      line-height:1.35;
     }
     .ai-chat-input button{
       border:none;
@@ -978,9 +1034,8 @@
         width:260px;
       }
       #ai-chat-window{
-        right:8px;
-        left:8px;
-        width:auto;
+        width:calc(100% - 24px);
+        left:50%;
       }
     }
     @media (max-width:600px){
@@ -988,7 +1043,7 @@
     }
   </style>
 </head>
-<body>
+<body data-ai-endpoint="/.netlify/functions/chat">
   <header>
     <div class="brand">
       <div class="brand-title">ADVANCED MEDICINAL CONSULTING</div>
@@ -1059,14 +1114,62 @@
               Evidence-driven architecture for complex programs
             </div>
             <ul class="hero-panel-list" data-edit-key="hero-panel-list">
-              <li>Structured program design from concept to deployment.</li>
-              <li>Regulatory-aligned frameworks for EU/UK oncology and ATMP.</li>
-              <li>Hands-on experience with DTC/CIK and dsRNA-based programs.</li>
-              <li>Focus on safety, data and realistic implementation constraints.</li>
+              <li>
+                <strong>MHRA &amp; EMA dialogue preparation</strong>
+                Pre-submission packages, scientific advice briefings.
+              </li>
+              <li>
+                <strong>GMP/GMP-lite CMC architecture</strong>
+                Manufacturing workflows, QC, supply chain for ATMPs.
+              </li>
+              <li>
+                <strong>Clinical endpoint selection</strong>
+                Biomarker hypotheses, comparators, HTA-ready evidence.
+              </li>
+              <li>
+                <strong>DTC/CIK &amp; dsRNA program experience</strong>
+                From legacy protocols to compliant, scalable programs.
+              </li>
             </ul>
           </div>
         </div>
       </aside>
+    </section>
+
+    <!-- WHO WE WORK WITH -->
+    <section id="who-we-work-with">
+      <div class="section-header">
+        <div class="section-eyebrow">Who we work with</div>
+        <div class="section-title">
+          Built for biotech, clinical networks and investors
+        </div>
+        <div class="section-sub">
+          We bridge scientific innovation, regulatory pathways and investment logic—connecting capital with deployable medical programs.
+        </div>
+      </div>
+
+      <div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
+        <article class="card">
+          <div class="card-tag">Biotech</div>
+          <div class="card-title">Early-stage teams</div>
+          <p>Oncology or ATMP assets that need EU/UK-ready development logic.</p>
+        </article>
+        <article class="card">
+          <div class="card-tag">Clinical</div>
+          <div class="card-title">DTC/CIK networks</div>
+          <p>Clinics deploying autologous programs with safety and compliance front-of-mind.</p>
+        </article>
+        <article class="card">
+          <div class="card-tag">Platforms</div>
+          <div class="card-title">Regulatory strategy</div>
+          <p>Companies seeking coordinated MHRA/EMA pathways and scalable manufacturing models.</p>
+        </article>
+        <article class="card">
+          <div class="card-tag">Investors</div>
+          <div class="card-title">Professional capital</div>
+          <p>Funds evaluating biotech opportunities and needing diligence-ready roadmaps.</p>
+        </article>
+      </div>
     </section>
 
     <!-- OVERVIEW -->
@@ -1083,7 +1186,7 @@
       </div>
 
       <div class="cards">
-        <article class="card">
+        <article class="card" data-detail="true">
           <div class="card-icon">🧪</div>
           <div class="card-tag">Oncology</div>
           <div class="card-title" data-edit-key="overview-card1-title">
@@ -1093,9 +1196,53 @@
             Clinical strategy, biomarker hypotheses, combination logic, endpoints and differentiated positioning in
             crowded indications.
           </p>
+          <div class="card-detail-template" aria-hidden="true">
+            <h4>Integrated Oncology Program Design</h4>
+            <p>
+              We help biotech teams move from hypothesis to deployable programs—choosing patients, endpoints and
+              positioning regulators and payers will actually embrace.
+            </p>
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">Clinical Development Logic</div>
+              <ul>
+                <li>Indication selection driven by unmet need, competition and differentiation.</li>
+                <li>Patient criteria and biomarker hypotheses that reinforce the clinical narrative.</li>
+                <li>Combination strategies that stay scientifically rational and commercially defensible.</li>
+                <li>Endpoints aligned with EMA/MHRA expectations and HTA requirements.</li>
+              </ul>
+            </div>
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">Competitive Positioning</div>
+              <ul>
+                <li>Map standard-of-care and emerging competitors to expose whitespace.</li>
+                <li>Highlight segments, lines or combinations others overlook.</li>
+                <li>Frame positioning that avoids unwinnable head-to-head battles.</li>
+              </ul>
+            </div>
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">Regulatory &amp; Payer Alignment</div>
+              <ul>
+                <li>Architect trials that satisfy EMA/MHRA and deliver payer-ready data.</li>
+                <li>Anticipate objections—safety, comparator choice, endpoint relevance.</li>
+                <li>Prepare narratives for scientific advice and HTA consultations.</li>
+              </ul>
+            </div>
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">From Hypothesis to IND</div>
+              <ul>
+                <li>Integrate preclinical, CMC and clinical work into one regulatory story.</li>
+                <li>Risk-based planning to surface potential show-stoppers early.</li>
+                <li>Timelines that clarify what must happen now versus later.</li>
+              </ul>
+            </div>
+            <p style="margin-bottom:0;">
+              Why it matters: oncology programs fail when design, positioning or evidence misalign.
+              We force the hard decisions early so every stream builds toward approval and adoption.
+            </p>
+          </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-detail="true">
           <div class="card-icon">🧬</div>
           <div class="card-tag">ATMP</div>
           <div class="card-title" data-edit-key="overview-card2-title">
@@ -1105,9 +1252,37 @@
             Cell and gene therapy development plans, risk-based CMC, early regulator dialogue and EU/UK entry strategy
             for complex assets.
           </p>
+          <div class="card-detail-template" aria-hidden="true">
+            <h4>Advanced Therapy Pathways</h4>
+            <p>
+              We keep CMC, regulatory and commercialization tracks synchronized so cell and gene therapy programs stay
+              deployable—not just scientifically elegant.
+            </p>
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">Risk-Based CMC</div>
+              <ul>
+                <li>Design GMP/GMP-lite flows, analytics and release testing tuned for inspections.</li>
+                <li>Model supply, logistics and comparability plans for autologous products.</li>
+              </ul>
+            </div>
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">Regulatory Dialogue</div>
+              <ul>
+                <li>Prep early EMA/MHRA conversations to de-risk novel modalities and endpoints.</li>
+                <li>Translate scientific claims into conservative, defensible briefing materials.</li>
+              </ul>
+            </div>
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">Commercial Readiness</div>
+              <ul>
+                <li>Align compassionate use, early access and payer evidence strategies.</li>
+                <li>Sequence manufacturing scale-up with launch markets and partner demand.</li>
+              </ul>
+            </div>
+          </div>
         </article>
 
-        <article class="card">
+        <article class="card" data-detail="true">
           <div class="card-icon">📊</div>
           <div class="card-tag">Portfolio</div>
           <div class="card-title" data-edit-key="overview-card3-title">
@@ -1117,8 +1292,67 @@
             Align discovery, clinical pipeline and commercial scenarios so that assets reinforce rather than compete
             with each other.
           </p>
+          <div class="card-detail-template" aria-hidden="true">
+            <h4>Portfolio Architecture: From Single Asset to Portfolio Logic</h4>
+            <p>
+              Core idea: most biotech teams run each asset in isolation. As the portfolio grows, assets start competing
+              for the same people, budget and positioning. We build a portfolio logic where assets reinforce one another
+              instead of fragmenting effort.
+            </p>
+
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">Strategic Asset Alignment</div>
+              <ul>
+                <li>Map overlaps and synergies: shared mechanisms, patient populations, combination potential.</li>
+                <li>Prioritize the order of play—what launches first, what follows, what can be deferred or out-licensed.</li>
+                <li>Design development sequences so data from one asset strengthens another’s position.</li>
+              </ul>
+            </div>
+
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">From Discovery to Commercialization</div>
+              <ul>
+                <li>Link discovery programs to the clinical pipeline as backups for potential failures.</li>
+                <li>Plan trials with commercial scenarios in mind—partnerships, IPO, acquisition.</li>
+                <li>Allocate budget and teams across assets without internal cannibalization.</li>
+              </ul>
+            </div>
+
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">Building a Coherent Narrative</div>
+              <ul>
+                <li>Craft a unified platform story for investors—expansion logic instead of a list of unrelated assets.</li>
+                <li>Clarify which assets attract pharma vs specialty biotech partners.</li>
+                <li>Diversify indications, mechanisms and regulatory paths so one failure does not sink the company.</li>
+              </ul>
+            </div>
+
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">Combination Logic</div>
+              <ul>
+                <li>Plan intra-portfolio combinations and align them with standard of care.</li>
+                <li>Structure IP and regulatory strategies for combination paths.</li>
+                <li>Validate that combinations create commercial value instead of complicating launch.</li>
+              </ul>
+            </div>
+
+            <div class="card-detail-section">
+              <div class="card-detail-section-title">Scenario Planning</div>
+              <ul>
+                <li>Define outcomes when lead assets succeed or fail and how the portfolio responds.</li>
+                <li>List exit options—sale, licensing, independent development—for each asset.</li>
+                <li>Time when to initiate new programs and when to sunset existing ones.</li>
+              </ul>
+            </div>
+
+            <p style="margin-bottom:0;">
+              Why it matters: investors and partners buy platform logic, not isolated projects. A coherent portfolio
+              strategy turns multiple assets into a single, credible story that systematically compounds value.
+            </p>
+          </div>
         </article>
       </div>
+      <div id="card-detail-panel" class="card-detail-panel" aria-live="polite" tabindex="-1"></div>
     </section>
 
     <!-- DTC & CIK -->
@@ -1194,6 +1428,12 @@
               Ideal for clinics or networks that want a standardized, evidence-generating DTC/CIK program instead of
               ad-hoc protocols.
             </div>
+            <p style="font-size:13px;color:var(--text);margin-top:8px;" data-edit-key="dtc-timeline">
+              <strong>Timeline:</strong> 6–12 months from scoping to first patient enrollment.
+            </p>
+            <p style="font-size:13px;color:var(--text);" data-edit-key="dtc-outcome">
+              <strong>Outcome focus:</strong> patient safety, immune recovery markers and quality-of-life endpoints.
+            </p>
 
             <div class="meta-replace">
               <div class="meta-label" style="margin-bottom:4px;">What defines a robust DTC/CIK program</div>
@@ -1245,6 +1485,12 @@
             Build coherent, conservative narratives for regulators, clinicians and payers, without over-claiming or
             stepping into individual treatment advice.
           </p>
+          <div class="visual-label" style="margin-top:12px;margin-bottom:6px;">Legacy foundation</div>
+          <ul class="visual-list" data-edit-key="larifan-legacy-list">
+            <li>40+ years of clinical use across Latvia, Hungary and Georgia.</li>
+            <li>Regulatory status: EMA-approved in select EU markets via legacy authorizations.</li>
+            <li>Clinical experience covering oncology support and viral infections.</li>
+          </ul>
         </div>
 
         <aside class="tableish">
@@ -1263,8 +1509,23 @@
           <div class="table-row">
             <div class="table-label">Workstreams</div>
             <div class="table-value" data-edit-key="larifan-table-workstreams">
-              Non-clinical mapping, clinical concepts, study concepts, commercial and access scenarios.
+              <strong>Development focus</strong>
+              <ul style="margin:6px 0 0;padding-left:18px;list-style:disc;">
+                <li>Mechanism validation &amp; biomarker mapping.</li>
+                <li>Clinical study concepts for oncology support and viral infections.</li>
+                <li>EU/UK access pathways plus payer positioning.</li>
+              </ul>
             </div>
+          </div>
+          <div style="margin-top:12px;">
+            <div class="table-label" style="border-bottom:none;">Service packages</div>
+            <ul class="meta-list" style="padding-left:18px;margin:6px 0 0;font-size:13px;color:var(--text);" data-edit-key="larifan-service-list">
+              <li>Pre-submission strategy (MHRA, EMA).</li>
+              <li>CMC gap analysis for ATMP-class expectations.</li>
+              <li>Clinical endpoint selection and evidence packages.</li>
+              <li>HTA / payer positioning for supportive indications.</li>
+              <li>Pricing: retainer or project-based engagements.</li>
+            </ul>
           </div>
         </aside>
       </div>
@@ -1275,10 +1536,16 @@
       <div class="section-header">
         <div class="section-eyebrow">Partners &amp; collaborators</div>
         <div class="section-title" data-edit-key="partners-title">
-          Selected clinical and research relationships
+          Partners &amp; collaborators
         </div>
         <div class="section-sub" data-edit-key="partners-sub">
-          We work with clinics and research organisations that combine scientific depth with pragmatic implementation in oncology and immunology.
+          Our network combines scientific depth with operational readiness:
+          <ul style="margin:8px 0 0;padding-left:18px;">
+            <li>GMP manufacturing capabilities (Froceth).</li>
+            <li>Clinical sites with ATMP and immunotherapy experience (Pallas, Innovita).</li>
+            <li>Legacy clinical data &amp; regulatory expertise (Larifan).</li>
+          </ul>
+          Together, we deliver integrated solutions from manufacturing to patient enrollment.
         </div>
       </div>
 
@@ -1376,6 +1643,46 @@
           towards clinical and commercial workstreams.
         </div>
       </div>
+      <div class="section-sub" style="margin-top:16px;color:var(--text);">
+        Current focus: advancing DTC/CIK program design (Concept → Preclinical) and Larifan clinical positioning (Preclinical → Clinical).
+        Most work sits at Concept and Preclinical stages because we help teams de-risk programs before committing to expensive clinical trials.
+      </div>
+    </section>
+
+    <!-- RECENT WORK -->
+    <section id="recent-work">
+      <div class="section-header">
+        <div class="section-eyebrow">Track record</div>
+        <div class="section-title">Recent work</div>
+        <div class="section-sub">
+          Selected projects demonstrating regulatory, clinical and commercial execution.
+        </div>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-tag">MHRA · UK</div>
+          <div class="card-title">Cell therapy pre-submission</div>
+          <p>MHRA Innovation Office package approved (IO-2025-BDE0A013) for an autologous oncology program.</p>
+        </article>
+        <article class="card">
+          <div class="card-tag">DTC/CIK</div>
+          <div class="card-title">Manufacturing workflow</div>
+          <p>Froceth &amp; Pallas clinical network: GMP-lite production design, QC stack and clinician playbooks.</p>
+        </article>
+        <article class="card">
+          <div class="card-tag">Larifan</div>
+          <div class="card-title">Clinical positioning</div>
+          <p>EU market-entry narrative, supportive endpoints and payer rationale for injectable dsRNA.</p>
+        </article>
+        <article class="card">
+          <div class="card-tag">Portfolio</div>
+          <div class="card-title">Multi-asset architecture</div>
+          <p>Aligned discovery, clinical and commercial sequencing for oncology platform investors.</p>
+        </article>
+      </div>
+      <p class="section-sub" style="margin-top:18px;">
+        We partner with biotech teams, clinical networks and professional investors to turn scientific assets into investment-ready programs.
+      </p>
     </section>
 
     <!-- CONTACT -->
@@ -1393,10 +1700,12 @@
             Send a brief outline of your project, geography and time horizon. We typically respond within 1–2 business
             days for an initial scoping conversation.
           </p>
-          <p><strong>Email:</strong> <span data-edit-key="contact-email">hello@advanced-medicinal.example</span></p>
+          <p><strong>Email:</strong> <span data-edit-key="contact-email">contact@advanced-medicinal.eu</span></p>
           <p><strong>Regions:</strong> <span data-edit-key="contact-regions">EU · UK · Remote</span></p>
+          <p><strong>Response time:</strong> Within 24 hours for initial scoping.</p>
+          <p><strong>First consultation:</strong> Complimentary 30-minute project assessment.</p>
           <button type="button" class="btn btn-primary" style="margin-top:8px"
-                  onclick="window.location.href='mailto:hello@advanced-medicinal.example'">
+                  onclick="window.location.href='mailto:contact@advanced-medicinal.eu'">
             Email us
           </button>
         </div>
@@ -1459,8 +1768,8 @@
   <button id="ai-chat-toggle" type="button">
     <span class="ai-badge">AI</span>
     <span id="ai-chat-toggle-text">
-      <strong>DTC/CIK &amp; Larifan AI</strong>
-      <span>Domain consultant · Info only</span>
+      <strong>Ask about DTC/CIK or Larifan</strong>
+      <span>Quick answers · Not medical advice</span>
     </span>
   </button>
 
@@ -1635,6 +1944,106 @@
         });
       }
 
+      function initSectionHighlight(){
+        var navLinks = Array.prototype.slice.call(document.querySelectorAll('header nav a[href^="#"]'));
+        if(!navLinks.length) return;
+
+        var linkMap = {};
+        navLinks.forEach(function(link){
+          var targetId = (link.getAttribute('href') || '').slice(1);
+          var section = document.getElementById(targetId);
+          if(section){
+            linkMap[targetId] = link;
+          }
+        });
+
+        var activeLink = null;
+        function setActive(link){
+          if(activeLink === link) return;
+          navLinks.forEach(function(l){ l.classList.remove('active'); });
+          if(link){
+            link.classList.add('active');
+            activeLink = link;
+          }
+        }
+
+        var observer = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if(entry.isIntersecting){
+              var link = linkMap[entry.target.id];
+              if(link){
+                setActive(link);
+              }
+            }
+          });
+        }, {
+          rootMargin: '-45% 0px -50% 0px',
+          threshold: 0
+        });
+
+        Object.keys(linkMap).forEach(function(id){
+          observer.observe(document.getElementById(id));
+        });
+
+        // default active for initial view
+        var firstSectionLink = linkMap[Object.keys(linkMap)[0]];
+        if(firstSectionLink){
+          setActive(firstSectionLink);
+        }
+      }
+
+      function initCardDetailPanel(){
+        var panel = document.getElementById('card-detail-panel');
+        var cards = document.querySelectorAll('.card[data-detail="true"]');
+        if(!panel || !cards.length) return;
+
+        var hideTimeout = null;
+
+        function renderCard(card){
+            var template = card.querySelector('.card-detail-template');
+            if(!template) return;
+            panel.innerHTML = template.innerHTML;
+            panel.classList.add('active');
+        }
+
+        function scheduleHide(){
+          cancelHide();
+          hideTimeout = setTimeout(function(){
+            panel.classList.remove('active');
+            panel.innerHTML = '';
+          }, 80);
+        }
+
+        function cancelHide(){
+          if(hideTimeout){
+            clearTimeout(hideTimeout);
+            hideTimeout = null;
+          }
+        }
+
+        cards.forEach(function(card){
+          card.addEventListener('mouseenter', function(){
+            cancelHide();
+            renderCard(card);
+          });
+          card.addEventListener('focusin', function(){
+            cancelHide();
+            renderCard(card);
+          });
+          card.addEventListener('mouseleave', function(){
+            scheduleHide();
+          });
+          card.addEventListener('focusout', function(){
+            scheduleHide();
+          });
+        });
+
+        panel.addEventListener('mouseenter', cancelHide);
+        panel.addEventListener('mouseleave', scheduleHide);
+        panel.addEventListener('focusin', cancelHide);
+        panel.addEventListener('focusout', scheduleHide);
+      }
+
       /* AI CHAT */
       function initAIChat(){
         var toggleBtn  = document.getElementById('ai-chat-toggle');
@@ -1645,6 +2054,7 @@
         var inputEl    = document.getElementById('aiChatInput');
         var sendBtn    = document.getElementById('aiChatSend');
         var isOpen     = false;
+        var isSending  = false;
 
         if(!toggleBtn || !chatWindow || !messagesEl || !inputEl || !sendBtn) return;
 
@@ -1659,9 +2069,11 @@
           messagesEl.scrollTop = messagesEl.scrollHeight;
         }
 
+        var aiEndpoint = (document.body && document.body.getAttribute('data-ai-endpoint')) || '/.netlify/functions/chat';
+
         async function callBackend(userText){
           try{
-            var res = await fetch('/.netlify/functions/chat', {
+            var res = await fetch(aiEndpoint, {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({ message: userText })
@@ -1680,15 +2092,21 @@
         }
 
         async function sendMessage(){
+          if(isSending) return;
           var text = (inputEl.value || '').trim();
           if(!text) return;
           addMessage('user', text);
           inputEl.value = '';
+          isSending = true;
           sendBtn.disabled = true;
 
-          var reply = await callBackend(text);
-          addMessage('assistant', reply);
-          sendBtn.disabled = false;
+          try{
+            var reply = await callBackend(text);
+            addMessage('assistant', reply);
+          } finally {
+            isSending = false;
+            sendBtn.disabled = false;
+          }
         }
 
         function openChat(){
@@ -1724,6 +2142,7 @@
         inputEl.addEventListener('keydown', function(e){
           if(e.key === 'Enter' && !e.shiftKey){
             e.preventDefault();
+            if(isSending) return;
             sendMessage();
           }
         });
@@ -1743,6 +2162,8 @@
         loadEditorText();
         initEditorPanel();
         initNavToggle();
+        initCardDetailPanel();
+        initSectionHighlight();
         initAIChat();
 
         var yearEl = document.getElementById('year');
