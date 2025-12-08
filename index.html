@@ -1,477 +1,1058 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Nutrition Intelligence Platform</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Medical Test Analyzer | AI-Powered Health Analysis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Upload your medical tests - blood work, cardiograms, MRI, CT scans - and get instant AI-powered health analysis and recommendations">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg: #030712;
-      --panel: #0b1224;
-      --panel-strong: #111a32;
-      --accent-1: #38bdf8;
-      --accent-2: #a855f7;
-      --accent-3: #34d399;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --radius-lg: 20px;
-      --radius-md: 14px;
-      --max-width: 1200px;
+      --bg-primary: #f5f7fb;
+      --bg-secondary: #ffffff;
+      --bg-card: #ffffff;
+      --bg-elevated: #eef2ff;
+      --accent-primary: #2563eb;
+      --accent-secondary: #6366f1;
+      --accent-success: #22c55e;
+      --accent-warning: #f59e0b;
+      --accent-danger: #ef4444;
+      --accent-info: #06b6d4;
+      --text-primary: #111827;
+      --text-secondary: #4b5563;
+      --text-muted: #6b7280;
+      --border-color: rgba(15, 23, 42, 0.08);
+      --border-accent: rgba(37, 99, 235, 0.4);
+      --glow-primary: rgba(37, 99, 235, 0.25);
+      --glow-success: rgba(34, 197, 94, 0.2);
+      --font-main: 'Outfit', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, rgba(56,189,248,0.15), transparent 45%), var(--bg);
-      color: var(--text);
+      font-family: var(--font-main);
+      background:
+        radial-gradient(circle at top left, #dbeafe 0, transparent 45%),
+        radial-gradient(circle at bottom right, #e0f2fe 0, transparent 55%),
+        var(--bg-primary);
+      color: var(--text-primary);
       min-height: 100vh;
-      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    .bg-gradient {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
     }
 
     header {
       position: sticky;
       top: 0;
-      z-index: 20;
-      backdrop-filter: blur(12px);
-      background: rgba(3, 7, 18, 0.9);
-      border-bottom: 1px solid rgba(148,163,184,0.2);
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      background: rgba(245, 247, 251, 0.9);
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 24px;
     }
 
-    .header-inner {
-      max-width: var(--max-width);
+    .header-content {
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 16px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       gap: 16px;
     }
 
-    .brand {
+    .logo {
       display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .brand span:first-child {
-      letter-spacing: 0.2em;
-      font-size: 13px;
-      text-transform: uppercase;
-    }
-    .brand span:last-child {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    nav a { color: var(--muted); text-decoration: none; }
-    nav a:hover { color: var(--accent-1); }
-
-    main section {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 60px 20px;
-    }
-
-    h1, h2, h3 { font-weight: 700; }
-    h1 { font-size: 38px; line-height: 1.1; }
-    h2 { font-size: 26px; margin-bottom: 12px; }
-    h3 { font-size: 18px; }
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 32px;
       align-items: center;
-      padding-top: 80px;
-    }
-
-    .hero p {
-      color: var(--muted);
-      font-size: 16px;
-      margin: 16px 0 24px;
-      max-width: 540px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .btn {
-      border: none;
-      border-radius: 999px;
-      padding: 12px 20px;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-      color: var(--bg);
-      box-shadow: 0 12px 30px rgba(56,189,248,0.35);
-    }
-    .btn-primary:hover { transform: translateY(-1px); }
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid rgba(148,163,184,0.4);
-      color: var(--text);
-    }
-
-    .hero-panel {
-      background: var(--panel);
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(148,163,184,0.2);
-      padding: 20px;
-      box-shadow: 0 20px 40px rgba(2,6,23,0.7);
-    }
-
-    .hero-panel h3 { margin-bottom: 12px; }
-    .hero-panel ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .section-eyebrow {
-      font-size: 12px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 18px;
-    }
-
-    .card {
-      background: var(--panel);
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(148,163,184,0.25);
-      padding: 18px;
-      box-shadow: 0 14px 30px rgba(2,6,23,0.6);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .card span {
-      font-size: 13px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .card p {
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .split {
-      display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-      gap: 26px;
-      align-items: flex-start;
-    }
-
-    .flow {
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(56,189,248,0.4);
-      padding: 18px;
-      background: var(--panel);
-      box-shadow: 0 16px 32px rgba(2,6,23,0.7);
-    }
-
-    .flow-step {
-      display: grid;
-      grid-template-columns: 40px minmax(0, 1fr);
       gap: 14px;
-      position: relative;
-      padding-bottom: 14px;
     }
-    .flow-step:not(:last-child)::after {
-      content: "";
-      position: absolute;
-      left: 20px;
-      top: 28px;
-      bottom: 0;
-      width: 2px;
-      background: linear-gradient(var(--accent-1), transparent);
-      opacity: 0.5;
-    }
-    .flow-index {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-      font-weight: 600;
-      font-size: 13px;
-    }
-    .flow-title { font-size: 15px; }
-    .flow-text { color: var(--muted); font-size: 13px; }
-
-    .highlight-panel {
-      background: var(--panel-strong);
-      border: 1px solid rgba(168,85,247,0.5);
-      border-radius: var(--radius-md);
-      padding: 18px;
-      box-shadow: 0 18px 40px rgba(3,7,18,0.8);
+      font-size: 22px;
+      box-shadow: 0 6px 20px var(--glow-primary);
+      color: #ffffff;
     }
 
-    .highlight-panel ul {
-      list-style: none;
-      font-size: 14px;
-      color: var(--muted);
+    .logo-text { display: flex; flex-direction: column; }
+    .logo-title { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; }
+    .logo-sub { font-size: 12px; color: var(--text-muted); }
+
+    .api-status {
       display: flex;
-      flex-direction: column;
-      gap: 8px;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
     }
 
-    .security-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
+    .api-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-success);
+      box-shadow: 0 0 10px var(--accent-success);
     }
 
-    .security-card {
-      background: var(--panel);
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(52,211,153,0.35);
-      padding: 16px;
-      font-size: 14px;
-      color: var(--muted);
-      box-shadow: 0 18px 38px rgba(2,6,23,0.7);
+    .api-status-label {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #e5f0ff;
+      font-size: 11px;
+      font-weight: 500;
+      color: #1d4ed8;
     }
 
-    footer {
-      max-width: var(--max-width);
+    .hero {
+      max-width: 900px;
       margin: 0 auto;
-      padding: 20px;
-      color: var(--muted);
-      font-size: 13px;
+      padding: 40px 24px 26px;
       text-align: center;
     }
 
-    @media (max-width: 900px) {
-      nav { display: none; }
-      .hero { grid-template-columns: 1fr; padding-top: 40px; }
-      .split { grid-template-columns: 1fr; }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #0f172a 0%, var(--accent-primary) 45%, var(--accent-info) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 22px;
+    }
+
+    .supported-tests {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .test-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
+    }
+
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+    }
+
+    .analyzer-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    @media (max-width: 1000px) {
+      .analyzer-layout { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    .panel-header {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: linear-gradient(to right, #ffffff, #eef2ff);
+    }
+
+    .panel-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #ffffff;
+    }
+
+    .panel-title h2 { font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+    .panel-title span { font-size: 13px; color: var(--text-muted); }
+
+    .panel-body { padding: 22px; }
+
+    .upload-zone {
+      position: relative;
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 34px 22px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: #f9fafb;
+    }
+
+    .upload-zone:hover,
+    .upload-zone.dragover {
+      border-color: var(--accent-primary);
+      background: #eef2ff;
+    }
+
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .upload-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      background: radial-gradient(circle at top, #bfdbfe, #93c5fd);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+    }
+
+    .upload-zone h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .upload-zone p { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
+
+    .upload-formats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .format-tag {
+      padding: 3px 8px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+
+    .file-preview { margin-top: 14px; display: none; }
+    .file-preview.visible { display: block; }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: #f9fafb;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+    }
+
+    .file-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      overflow: hidden;
+    }
+
+    .file-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+    .file-info { flex: 1; min-width: 0; }
+    .file-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+    .file-meta { font-size: 11px; color: var(--text-muted); }
+
+    .file-remove {
+      width: 26px;
+      height: 26px;
+      border-radius: var(--radius-sm);
+      background: rgba(239, 68, 68, 0.08);
+      border: none;
+      color: var(--accent-danger);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .file-remove:hover { background: rgba(239, 68, 68, 0.16); }
+
+    .test-type-section { margin-top: 18px; }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .test-type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .test-type-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .test-type-btn {
+      padding: 10px 8px;
+      background: #f9fafb;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .test-type-btn:hover { border-color: var(--accent-primary); background: #eef2ff; }
+
+    .test-type-btn.active {
+      border-color: var(--accent-primary);
+      background: #e0ecff;
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.15);
+    }
+
+    .test-type-btn .icon { font-size: 20px; margin-bottom: 2px; }
+    .test-type-btn .label { font-size: 11px; font-weight: 500; color: var(--text-primary); }
+
+    .analyze-section { margin-top: 18px; }
+
+    .btn {
+      width: 100%;
+      padding: 12px 18px;
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: var(--font-main);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.18s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: white;
+      box-shadow: 0 10px 24px var(--glow-primary);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px var(--glow-primary);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .results-panel { position: sticky; top: 82px; }
+
+    .results-empty {
+      padding: 40px 22px;
+      text-align: center;
+    }
+
+    .results-empty-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      background: #eef2ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+    }
+
+    .results-empty h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .results-empty p { font-size: 13px; color: var(--text-muted); max-width: 280px; margin: 0 auto; }
+
+    .loading-state { padding: 40px 22px; text-align: center; }
+
+    .loading-spinner {
+      width: 46px;
+      height: 46px;
+      border: 3px solid #e5e7eb;
+      border-top-color: var(--accent-primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 14px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-state h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .loading-state p { font-size: 13px; color: var(--text-muted); }
+
+    .results-content { padding: 22px; }
+
+    .health-score {
+      text-align: center;
+      padding: 18px;
+      background: #f9fafb;
+      border-radius: var(--radius-lg);
+      margin-bottom: 18px;
+    }
+
+    .health-score-circle {
+      width: 116px;
+      height: 116px;
+      margin: 0 auto 10px;
+      position: relative;
+    }
+
+    .health-score-circle svg { transform: rotate(-90deg); }
+    .health-score-circle circle { fill: none; stroke-width: 10; }
+    .health-score-bg { stroke: #e5e7eb; }
+
+    .health-score-progress {
+      stroke: var(--accent-success);
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1s ease;
+    }
+
+    .health-score-value {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .health-score-number { font-size: 30px; font-weight: 700; line-height: 1; }
+    .health-score-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+    .health-score-status { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .health-score-desc { font-size: 12px; color: var(--text-muted); }
+
+    .findings-section { margin-bottom: 18px; }
+    .findings-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .findings-header h3 { font-size: 14px; font-weight: 600; }
+
+    .finding-card {
+      padding: 12px;
+      background: #f9fafb;
+      border-radius: var(--radius-md);
+      border-left: 3px solid;
+      margin-bottom: 8px;
+    }
+
+    .finding-card.critical { border-color: var(--accent-danger); background: #fef2f2; }
+    .finding-card.warning { border-color: var(--accent-warning); background: #fffbeb; }
+    .finding-card.normal { border-color: var(--accent-success); background: #ecfdf3; }
+    .finding-card.info { border-color: var(--accent-info); background: #ecfeff; }
+
+    .finding-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .finding-icon { font-size: 16px; }
+    .finding-title { font-size: 13px; font-weight: 600; flex: 1; }
+
+    .finding-badge {
+      font-size: 9px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    .finding-card.critical .finding-badge { background: rgba(239, 68, 68, 0.15); color: var(--accent-danger); }
+    .finding-card.warning .finding-badge { background: rgba(245, 158, 11, 0.18); color: var(--accent-warning); }
+    .finding-card.normal .finding-badge { background: rgba(34, 197, 94, 0.16); color: var(--accent-success); }
+
+    .finding-text { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+
+    .recommendations-section h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .recommendation-card {
+      padding: 12px;
+      background: #f9fafb;
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+    }
+
+    .recommendation-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+
+    .recommendation-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .recommendation-icon.diet { background: rgba(34, 197, 94, 0.15); }
+    .recommendation-icon.supplement { background: rgba(245, 158, 11, 0.15); }
+    .recommendation-icon.lifestyle { background: rgba(129, 140, 248, 0.18); }
+    .recommendation-icon.medical { background: rgba(239, 68, 68, 0.15); }
+    .recommendation-icon.monitoring { background: rgba(6, 182, 212, 0.15); }
+
+    .recommendation-title { font-size: 13px; font-weight: 600; }
+    .recommendation-text { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+
+    .disclaimer {
+      margin-top: 18px;
+      padding: 12px;
+      background: #fffbeb;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: var(--radius-md);
+      display: flex;
+      gap: 8px;
+    }
+
+    .disclaimer-icon { font-size: 18px; flex-shrink: 0; }
+    .disclaimer-text { font-size: 11px; color: #92400e; line-height: 1.5; }
+    .disclaimer-text strong { display: block; margin-bottom: 3px; }
+
+    .raw-toggle { margin-top: 12px; text-align: center; }
+
+    .raw-toggle button {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 11px;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .raw-toggle button:hover { color: var(--text-primary); }
+
+    .raw-content {
+      display: none;
+      margin-top: 10px;
+      padding: 12px;
+      background: #f3f4f6;
+      border-radius: var(--radius-md);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
+    .raw-content.visible { display: block; }
+
+    footer {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 16px 24px 24px;
+      border-top: 1px solid var(--border-color);
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .header-content { gap: 8px; }
     }
   </style>
 </head>
 <body>
+  <div class="bg-gradient"></div>
+
   <header>
-    <div class="header-inner">
-      <div class="brand">
-        <span>Nutrition Intelligence</span>
-        <span>Автоматический анализ любых медицинских данных</span>
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">🔬</div>
+        <div class="logo-text">
+          <div class="logo-title">Medical Test Analyzer</div>
+          <div class="logo-sub">AI-Powered Health Analysis</div>
+        </div>
       </div>
-      <nav>
-        <a href="#overview">Платформа</a>
-        <a href="#ingest">Загрузка</a>
-        <a href="#ai">Интеллект</a>
-        <a href="#security">Безопасность</a>
-        <a href="#contact">Контакт</a>
-      </nav>
+      <div class="api-status">
+        <span class="api-status-dot"></span>
+        <span class="api-status-label">AI backend connected</span>
+      </div>
     </div>
   </header>
 
+  <section class="hero">
+    <h1>Upload your medical tests and get instant AI insights</h1>
+    <p>
+      Our AI analyzes your medical documents and provides a structured health overview with personalized recommendations.
+    </p>
+
+    <div class="supported-tests">
+      <div class="test-badge"><span>🩸</span> Blood tests</div>
+      <div class="test-badge"><span>❤️</span> ECG</div>
+      <div class="test-badge"><span>🧠</span> MRI</div>
+      <div class="test-badge"><span>📷</span> CT</div>
+      <div class="test-badge"><span>🫁</span> X-ray</div>
+      <div class="test-badge"><span>🔬</span> Lab reports</div>
+    </div>
+  </section>
+
   <main>
-    <section class="hero" id="top">
-      <div>
-        <div class="section-eyebrow">Нутрициологический ИИ</div>
-        <h1>Загрузи анализы файлом или фото — система сама их прочитает и выдаст рекомендации.</h1>
-        <p>
-          Платформа автоматически считывает лабораторные бланки, PDF, DICOM, фотоснимки и данные гаджетов,
-          сравнивает с референсами и мгновенно формирует советы нутрициолога: питание, добавки, образ жизни,
-          рекомендации повторных анализов.
-        </p>
-        <div class="hero-actions">
-          <button class="btn btn-primary" onclick="location.hash='#ingest'">Как проходит загрузка</button>
-          <button class="btn btn-ghost" onclick="location.hash='#ai'">Посмотреть интеллект</button>
-        </div>
-      </div>
-      <aside class="hero-panel">
-        <h3>Что распознаём автоматически</h3>
-        <ul>
-          <li>PDF/CSV лабораторий, выписки, генетические отчёты.</li>
-          <li>Фотографии бланков и экранов — OCR очищает шум.</li>
-          <li>DICOM и изображения МРТ/КТ/рентгенов для CV-аналитики.</li>
-          <li>Носимые устройства: CGM, часы, весы, пульсометры.</li>
-        </ul>
-      </aside>
-    </section>
-
-    <section id="overview">
-      <div class="section-eyebrow">Платформа</div>
-      <h2>Все показатели в одном кошельке данных</h2>
-      <p style="color:var(--muted); margin-bottom: 26px; max-width: 720px;">
-        Приложение работает в гостевом или аккаунт режиме. Данные автоматически шифруются, проходят разбор,
-        попадают в персональный кошелёк и используются ИИ движком для построения отчётов, обновлений и предупреждений.
-      </p>
-      <div class="cards">
-        <article class="card">
-          <span>Автопарсер</span>
-          <h3>Файл или фото</h3>
-          <p>Загрузи PDF, CSV, DICOM или сделай фото — система сама распознает формат, очистит и структурирует показатели.</p>
-        </article>
-        <article class="card">
-          <span>ИИ-интерпретация</span>
-          <h3>Режим нутрициолога</h3>
-          <p>LLM с профильным промптом анализирует нормализованные данные, сравнивает с клиническими гайдлайнами и формирует план.</p>
-        </article>
-        <article class="card">
-          <span>Обновления</span>
-          <h3>Динамика и напоминания</h3>
-          <p>Платформа хранит историю, строит графики прогресса, напоминает о контрольных тестах и проверяет новые нормы.</p>
-        </article>
-        <article class="card">
-          <span>Безопасность</span>
-          <h3>Уровень банка</h3>
-          <p>AES-256, TLS 1.3, аудит, гостевой сейф без регистрации и контроль доступа по токенам для врачей.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="ingest">
-      <div class="section-eyebrow">Процесс загрузки</div>
-      <h2>Система сама считывает показатели — пациенту ничего писать не нужно</h2>
-      <div class="split" style="margin-top: 24px;">
-        <div class="flow">
-          <div class="flow-step">
-            <div class="flow-index">01</div>
-            <div>
-              <div class="flow-title">Выбор режима</div>
-              <div class="flow-text">Гость (временный сейф) или аккаунт с кошельком данных. Все действия подписываются ключом устройства.</div>
-            </div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-index">02</div>
-            <div>
-              <div class="flow-title">Загрузка</div>
-              <div class="flow-text">Drag & Drop файла, фото с камеры, подключение гаджетов или прямой импорт лабораторий. Автоопределение типа.</div>
-            </div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-index">03</div>
-            <div>
-              <div class="flow-title">Разбор</div>
-              <div class="flow-text">OCR + CV + табличные парсеры извлекают показатели, нормализуют единицы и мапят в справочники.</div>
-            </div>
-          </div>
-          <div class="flow-step">
-            <div class="flow-index">04</div>
-            <div>
-              <div class="flow-title">Отчёт</div>
-              <div class="flow-text">ИИ формирует нутрициологический отчёт, список добавок, образ жизни, рекомендации по повторным анализам и напоминания.</div>
-            </div>
+    <div class="analyzer-layout">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon">📤</div>
+          <div class="panel-title">
+            <h2>Upload medical documents</h2>
+            <span>Drag & drop or click to browse</span>
           </div>
         </div>
-        <aside class="highlight-panel">
-          <h3 style="margin-bottom: 12px;">Что внутри пайплайна</h3>
-          <ul>
-            <li>Анонимизация PHI перед обработкой.</li>
-            <li>DocTr/TrOCR для бланков, Vision Transformers для снимков.</li>
-            <li>TimescaleDB хранит метрики гаджетов (CGM, HRV, сон).</li>
-            <li>Temporal/Airflow управляет очередями и перезапусками.</li>
-            <li>Пользователь видит прогресс: Очередь → Парсинг → ИИ.</li>
-          </ul>
-        </aside>
-      </div>
-    </section>
+        <div class="panel-body">
+          <div class="upload-zone" id="uploadZone">
+            <input type="file" id="fileInput" accept="image/*,.pdf" multiple>
+            <div class="upload-icon">📄</div>
+            <h3>Drop your files here</h3>
+            <p>or click to browse from your device</p>
+            <div class="upload-formats">
+              <span class="format-tag">JPG</span>
+              <span class="format-tag">PNG</span>
+              <span class="format-tag">PDF</span>
+              <span class="format-tag">HEIC</span>
+            </div>
+          </div>
 
-    <section id="ai">
-      <div class="section-eyebrow">Интеллект</div>
-      <h2>Специализированные промпты и модели</h2>
-      <div class="cards" style="margin-top: 24px;">
-        <article class="card">
-          <span>Parser Labs</span>
-          <h3>Структурирование анализов</h3>
-          <p>LLM-парсер выдаёт JSON с показателями, единицами, референсами и флагами "ниже/выше/критично" без участия пациента.</p>
-        </article>
-        <article class="card">
-          <span>Coach</span>
-          <h3>Нутрициологический ответ</h3>
-          <p>Промпт «нутрициолог + функциональный медик» выдаёт обзор состояния, питание, добавки, образ жизни, анализы для пересдачи.</p>
-        </article>
-        <article class="card">
-          <span>Follow-up</span>
-          <h3>Следующие шаги</h3>
-          <p>Отдельный генератор советует какие тесты повторить (рутинно/скоро/срочно) и когда обратиться к врачу.</p>
-        </article>
-        <article class="card">
-          <span>Wearable Trends</span>
-          <h3>Пояснение гаджетов</h3>
-          <p>Анализирует HRV, глюкозу, нагрузку и связывает их с рекомендациями по сну, питанию, стрессу.</p>
-        </article>
-      </div>
-    </section>
+          <div class="file-preview" id="filePreview"></div>
 
-    <section id="security">
-      <div class="section-eyebrow">Безопасность</div>
-      <h2>Жёсткий контроль, как у банковских данных</h2>
-      <div class="security-grid" style="margin-top: 20px;">
-        <div class="security-card">
-          <strong>Шифрование</strong><br />
-          TLS 1.3, AES-256-GCM, ключи в HSM/KMS, разделённые секреты для гостевого сейфа.
-        </div>
-        <div class="security-card">
-          <strong>Доступ</strong><br />
-          RBAC + ABAC, токены для врачей с истечением, журнал действий и уведомления.
-        </div>
-        <div class="security-card">
-          <strong>Соответствие</strong><br />
-          HIPAA/GDPR/SOC2-ready: DPIA, BAA, DSR API, баг-баунти и регулярные pentest.
-        </div>
-        <div class="security-card">
-          <strong>Контроль речи ИИ</strong><br />
-          Политики запрещают диагнозы и назначения, все ответы содержат дисклеймер и логируются для аудита.
-        </div>
-      </div>
-    </section>
+          <div class="test-type-section">
+            <div class="section-label">📋 Select test type (optional)</div>
+            <div class="test-type-grid">
+              <button class="test-type-btn active" data-type="auto">
+                <div class="icon">🤖</div>
+                <div class="label">Auto detect</div>
+              </button>
+              <button class="test-type-btn" data-type="blood">
+                <div class="icon">🩸</div>
+                <div class="label">Blood test</div>
+              </button>
+              <button class="test-type-btn" data-type="ecg">
+                <div из
+              <button class="test-type-btn" data-type="ecg">
+                <div class="icon">❤️</div>
+                <div class="label">ECG/EKG</div>
+              </button>
+              <button class="test-type-btn" data-type="mri">
+                <div class="icon">🧠</div>
+                <div class="label">MRI</div>
+              </button>
+              <button class="test-type-btn" data-type="ct">
+                <div class="icon">📷</div>
+                <div class="label">CT scan</div>
+              </button>
+              <button class="test-type-btn" data-type="xray">
+                <div class="icon">🫁</div>
+                <div class="label">X-ray</div>
+              </button>
+            </div>
+          </div>
 
-    <section id="contact">
-      <div class="section-eyebrow">Связаться</div>
-      <h2>Готовы подключить вашу лабораторию или приложение</h2>
-      <div class="cards" style="margin-top: 24px;">
-        <article class="card">
-          <span>Email</span>
-          <h3>hello@nutrition-intel.example</h3>
-          <p>Напишите цель, тип анализов и интеграции. Ответим в течение 1–2 рабочих дней.</p>
-        </article>
-        <article class="card">
-          <span>Следующие шаги</span>
-          <h3>Что нужно от вас</h3>
-          <p>Список поддерживаемых форматов, требования к брендированию, юридические ограничения и контакт безопасника.</p>
-        </article>
+          <div class="analyze-section">
+            <button class="btn btn-primary" id="analyzeBtn" disabled>
+              <span>🧠</span>
+              Analyze with AI
+            </button>
+          </div>
+        </div>
       </div>
-    </section>
+
+      <div class="panel results-panel">
+        <div class="panel-header">
+          <div class="panel-icon">📊</div>
+          <div class="panel-title">
+            <h2>Analysis results</h2>
+            <span>AI-powered health assessment</span>
+          </div>
+        </div>
+        <div id="resultsContainer">
+          <div class="results-empty">
+            <div class="results-empty-icon">🔍</div>
+            <h3>Ready to analyze</h3>
+            <p>Upload medical documents and click “Analyze with AI”.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <footer>
-    © <span id="year"></span> Nutrition Intelligence · Не является медицинским советом.
+    © 2025 Medical Test Analyzer · AI-Powered Health Analysis · For informational purposes only
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const yearEl = document.getElementById('year');
-      if (yearEl) yearEl.textContent = new Date().getFullYear();
-    });
+    (function () {
+      const uploadZone = document.getElementById("uploadZone");
+      const fileInput = document.getElementById("fileInput");
+      const filePreview = document.getElementById("filePreview");
+      const analyzeBtn = document.getElementById("analyzeBtn");
+      const resultsContainer = document.getElementById("resultsContainer");
+      const testTypeBtns = document.querySelectorAll(".test-type-btn");
+
+      let uploadedFiles = [];
+      let selectedTestType = "auto";
+
+      testTypeBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          testTypeBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          selectedTestType = btn.dataset.type;
+        });
+      });
+
+      uploadZone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        uploadZone.classList.add("dragover");
+      });
+
+      uploadZone.addEventListener("dragleave", () => {
+        uploadZone.classList.remove("dragover");
+      });
+
+      uploadZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove("dragover");
+        handleFiles(e.dataTransfer.files);
+      });
+
+      fileInput.addEventListener("change", (e) => {
+        handleFiles(e.target.files);
+      });
+
+      function handleFiles(files) {
+        for (const file of files) {
+          if (file.type.startsWith("image/") || file.type === "application/pdf") {
+            uploadedFiles.push(file);
+          }
+        }
+        renderFilePreview();
+        updateAnalyzeButton();
+      }
+
+      function renderFilePreview() {
+        if (uploadedFiles.length === 0) {
+          filePreview.classList.remove("visible");
+          filePreview.innerHTML = "";
+          return;
+        }
+
+        filePreview.classList.add("visible");
+        filePreview.innerHTML = uploadedFiles
+          .map((file, index) => {
+            const isImage = file.type.startsWith("image/");
+            const icon = isImage ? "🖼️" : "📄";
+            const size = formatFileSize(file.size);
+
+            let thumbContent = `<span>${icon}</span>`;
+            if (isImage) {
+              const url = URL.createObjectURL(file);
+              thumbContent = `<img src="${url}" alt="${file.name}">`;
+            }
+
+            return `
+              <div class="file-item">
+                <div class="file-thumb">${thumbContent}</div>
+                <div class="file-info">
+                  <div class="file-name">${file.name}</div>
+                  <div class="file-meta">${size}</div>
+                </div>
+                <button class="file-remove" data-index="${index}">×</button>
+              </div>
+            `;
+          })
+          .join("");
+
+        filePreview.querySelectorAll(".file-remove").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            uploadedFiles.splice(parseInt(btn.dataset.index, 10), 1);
+            renderFilePreview();
+            updateAnalyzeButton();
+          });
+        });
+      }
+
+      function formatFileSize(bytes) {
+        if (bytes < 1024) return bytes + " B";
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+        return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+      }
+
+      function updateAnalyzeButton() {
+        analyzeBtn.disabled = uploadedFiles.length === 0;
+      }
+
+      analyzeBtn.addEventListener("click", async () => {
+        if (uploadedFiles.length === 0) return;
+
+        showLoading();
+        analyzeBtn.disabled = true;
+
+        try {
+          const base64Images = [];
+
+          for (const file of uploadedFiles) {
+            if (file.type.startsWith("image/")) {
+              const base64 = await fileToBase64(file);
+              base64Images.push(base64);
+            }
+          }
+
+          if (base64Images.length === 0) {
+            throw new Error("Please upload at least one image file");
+          }
+
+          const resp = await fetch("/.netlify/functions/medical-analyze", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              images: base64Images,
+              testType: selectedTestType,
+            }),
+          });
+
+          const data = await resp.json();
+
+          if (!resp.ok) {
+            throw new Error(data.error || "AI request failed");
+          }
+
+          showResults(data.result);
+        } catch (err) {
+          console.error(err);
+          showError(err.message);
+        } finally {
+          analyzeBtn.disabled = false;
+          updateAnalyzeButton();
+        }
+      });
+
+      function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function showLoading() {
+        resultsContainer.innerHTML = `
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <h3>Analyzing your documents</h3>
+            <p>This may take 10–30 seconds…</p>
+          </div>
+        `;
+      }
+
+      function showError(message) {
+        resultsContainer.innerHTML = `
+          <div class="results-empty">
+            <div class="results-empty-icon">⚠️</div>
+            <h3>Analysis error</h3>
+            <p>${message}</p>
+          </div>
+        `;
+      }
+
+      function showResults(result) {
+        const score = result.healthScore ?? 70;
+        let scoreColor = "var(--accent-success)";
+        let scoreStatus = "Good";
+
+        if (score < 50) {
+          scoreColor = "var(--accent-danger)";
+          scoreStatus = "Needs attention";
+        } else if (score < 70) {
+          scoreColor = "var(--accent-warning)";
+          scoreStatus = "Fair";
+        }
+
+        const circumference = 2 * Math.PI * 50;
+        const progress = circumference - (score / 100) * circumference;
+
+        const findingsHTML = (result.findings || [])
+          .map((f) => {
+            const icons = {
+              critical: "🔴",
+              warning: "🟡",
+              normal: "🟢",
+              info: "🔵",
+            };
+            return `
+              <div class="finding-card ${f.severity || "info"}">
+                <div class="finding-header">
+                  <span class="finding-icon">${
+                    icons[f.severity] || "🔵"
+                  }</span>
+                  <span class="finding-title">${f.title}</span>
+                  <span class="finding-badge">${f.severity || "info"}</span>
+                </div>
+                <div class="finding-text">${f.description}</div>
+              </div>
+            `;
+          })
+          .join("");
+
+        const recommendationsHTML = (result.recommendations || [])
+          .map((r) => {
+            const icons = {
+              diet: "🥗",
+              supplement: "💊",
+              lifestyle: "🏃",
+              medical: "👨‍⚕️",
+              monitoring: "📊",
+            };
+            return `
+              <div class="recommendation-card">
+                <div class="recommendation-header">
+                  <div class="recommendation-icon ${
+                    r.type || "diet"
+                  }">${icons[r.type] || "📋"}</div>
+                  <span class="recommendation-title">${r.title}</span>
+                </div>
+                <div class="recommendation-text">${r.description}</div>
+              </div>
+            `;
+          })
+          .join("");
+
+        resultsContainer.innerHTML = `
+          <div class="results-content">
+            <div class="health-score">
+              <div class="health-score-circle">
+                <svg width="116" height="116">
+                  <circle class="health-score-bg" cx="58" cy="58" r="50"></circle>
+                  <circle class="health-score-progress" cx="58" cy="58" r="50"
+                    stroke="${scoreColor}"
+                    stroke-dasharray="${circumference}"
+                    stroke-dashoffset="${progress}">
+                  </circle>
+                </svg>
+                <div class="health-score-value">
+                  <div class="health-score-number" style="color: ${scoreColor}">${score}</div>
+                  <div class="health-score-label">Health score</div>
+                </div>
+              </div>
+              <div class="health-score-status" style="color: ${scoreColor}">${scoreStatus}</div>
+              <div class="health-score-desc">${result.summary || "Analysis complete"}</div>
+            </div>
+
+            ${
+              result.detectedType
+                ? `
+              <div class="finding-card info" style="margin-bottom: 16px;">
+                <div class="finding-header">
+                  <span class="finding-icon">🔬</span>
+                  <span class="finding-title">Detected: ${result.detectedType}</span>
+                </div>
+              </div>
+            `
+                : ""
+            }
+
+            ${
+              findingsHTML
+                ? `
+              <div class="findings-section">
+                <div class="findings-header"><span>📋</span><h3>Key findings</h3></div>
+                ${findingsHTML}
+              </div>
+            `
+                : ""
+            }
+
+            ${
+              recommendationsHTML
+                ? `
+              <div class="recommendations-section">
+                <h3><span>💡</span> Recommendations</h3>
+                ${recommendationsHTML}
+              </div>
+            `
+                : ""
+            }
+
+            <div class="disclaimer">
+              <span class="disclaimer-icon">⚠️</span>
+              <div class="disclaimer-text">
+                <strong>Medical disclaimer</strong>
+                This AI analysis is for informational and educational purposes only. Always consult with a qualified healthcare professional.
+              </div>
+            </div>
+
+            ${
+              result.rawAnalysis
+                ? `
+              <div class="raw-toggle">
+                <button onclick="document.getElementById('rawContent').classList.toggle('visible')">
+                  📝 Show / hide raw analysis
+                </button>
+              </div>
+              <div class="raw-content" id="rawContent">${result.rawAnalysis}</div>
+            `
+                : ""
+            }
+          </div>
+        `;
+      }
+    })();
   </script>
 </body>
 </html>
