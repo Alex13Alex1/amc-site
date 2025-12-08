@@ -122,23 +122,23 @@ CREATE TABLE recommendations (
 
 ### 3.2 Nutritional interpretation prompt (`coach_v2`)
 ```
-System: Functional nutritionist + lifestyle coach. Provide education, nutrition, supplement, and behavior guidance for adults. Never diagnose disease, prescribe medication, or imply cure. Every reply must end with: "Не является медицинским советом. Обратитесь к врачу при любых симптомах."
+System: Functional nutritionist + lifestyle coach. Provide education, nutrition, supplement, and behavior guidance for adults. Never diagnose disease, prescribe medication, or imply cure. Every reply must end with: "This is not medical advice. Please consult a physician."
 
-You receive JSON with keys profile, labs, imaging, wearables, goals, history. Respond in Russian, structured as:
-1. Обзор (3 bullets)
-2. Ключевые наблюдения (each: finding + why it matters)
-3. Питание (macro/micro focus + foods)
-4. Добавки (nutrients, safe range, timing)
-5. Образ жизни (сон, стресс, активность)
-6. Какие анализы/скрининги пересдать или добавить (urgency labels: рутинно/скоро/срочно)
-7. Когда обратиться к врачу (if any flags)
+You receive JSON with keys profile, labs, imaging, wearables, goals, history. Respond in English, structured as:
+1. Overview (3 bullets)
+2. Key findings (each: finding + why it matters)
+3. Nutrition (macro/micro focus + foods)
+4. Supplements (nutrients, safe range, timing)
+5. Lifestyle (sleep, stress, activity)
+6. Follow-up labs or screenings (urgency labels: routine/soon/urgent)
+7. When to contact a doctor (if any red flags)
 
-If any value exceeds critical thresholds (provided in clinical_flags), prepend "⚠" and suggest physician visit.
+If any value exceeds critical thresholds (provided in clinical_flags), prepend "⚠" and advise contacting a physician.
 ```
 
 ### 3.3 Follow-up test generator (`followup_v1`)
 ```
-System: Suggest follow-up labs/imaging based on abnormalities. Categorize each item as routine (<6m), soon (<3m), urgent (<2w). For each include: name, trigger finding, rationale, preparation tip. Use friendly Russian.
+System: Suggest follow-up labs/imaging based on abnormalities. Categorize each item as routine (<6m), soon (<3m), urgent (<2w). For each include: name, trigger finding, rationale, preparation tip. Use approachable English.
 ```
 
 ### 3.4 Gadget trend explainer (`wearable_edu_v1`)
@@ -147,13 +147,13 @@ System: Health coach explaining wearable trends (HRV, CGM, sleep). Identify 2-3 
 ```
 
 ## 4. UX & Figma Brief
-- **Entry screen:** Choice between гостевой режим (объяснение про локальное хранение) и создание аккаунта (email/SSI/mobile ID). Security badge + CTA "Создать кошелёк данных".
-- **Upload workspace:** drag & drop, camera capture modal, gadget connect wizard (OAuth/binding). Show supported formats chips + status timeline.
-- **Processing view:** each file card shows phase (De-identify → Parsing → AI Review). Provide ETA + ability to add context (цель, симптомы, гаджеты).
-- **Report:** modular cards (Обзор, Ключевые находки, Питание, Добавки, Образ жизни, Анализы). Alerts pinned at top with CTA "Поделиться с врачом".
-- **History tab:** timeline component with compare slider (например, гемоглобин за 6 месяцев), export buttons (PDF/FHIR/CSV).
-- **Wallet screen:** storage gauge, sharing links list, button "Удалить всё", audit trail snippet.
-- **Chat assistant:** slide-over referencing latest report, quick reply chips (“Объясни ферритин”, “Какие добавки приём”), always show disclaimer.
+- **Entry screen:** Choice between guest mode (explains local-only storage) and full account (email/SSI/mobile ID). Security badge + CTA "Create data wallet".
+- **Upload workspace:** drag & drop zone, camera capture modal, gadget connect wizard (OAuth/binding). Show supported format chips + processing timeline.
+- **Processing view:** each file card shows phase (De-identify → Parsing → AI Review). Provide ETA + ability to attach context (goal, symptoms, connected devices).
+- **Report:** modular cards (Overview, Key findings, Nutrition, Supplements, Lifestyle, Tests). Alerts pinned at top with CTA "Share with physician".
+- **History tab:** timeline component with comparison slider (e.g., hemoglobin over 6 months), export buttons (PDF/FHIR/CSV).
+- **Wallet screen:** storage gauge, sharing link list, destructive "Delete all" button, audit trail snippet.
+- **Chat assistant:** slide-over referencing latest report, quick-reply chips (“Explain ferritin”, “What supplements now”), always show disclaimer.
 - **Figma handoff checklist:** color tokens, typography scale, icon set, component variants (cards, chips, badges), dark theme grid.
 
 ## 5. Security & Compliance Checklist
@@ -179,7 +179,7 @@ System: Health coach explaining wearable trends (HRV, CGM, sleep). Identify 2-3 
    ```bash
    netlify dev
    ```
-   - Serves `index.html` and proxies `/.netlify/functions/chat` to the serverless function in `netlify/functions/chat.js`.
+   - Serves `index.html` and proxies `/.netlify/functions/medical-analyze` to the serverless function in `netlify/functions/medical-analyze.js`.
    - Open [http://localhost:8888](http://localhost:8888) in the browser.
 4. **Static preview alternative**
    ```bash
