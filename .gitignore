@@ -1,0 +1,10 @@
+# Secrets (never commit)
+.env
+.env.*
+!.env.example
+
+# Netlify local tooling
+.netlify/
+
+# OS / editor noise
+.DS_Store
