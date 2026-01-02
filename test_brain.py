@@ -4,8 +4,10 @@ from crewai import Agent, Crew, LLM, Process, Task
 
 
 def main() -> None:
-    # Don't hardcode secrets in source code.
-    # Set it in your shell instead: export OPENAI_API_KEY="sk-..."
+    # Never hardcode secrets in source code.
+    # Set it in your shell instead:
+    #   export OPENAI_API_KEY="sk-..."
+    #   export OPENAI_MODEL_NAME="gpt-4o-mini"  # optional
     if not os.getenv("OPENAI_API_KEY"):
         raise RuntimeError(
             "Missing OPENAI_API_KEY. Set it in your environment, e.g.\n"
@@ -15,57 +17,51 @@ def main() -> None:
 
     llm = LLM(model=os.getenv("OPENAI_MODEL_NAME", "gpt-4o-mini"))
 
-    # 2. СОЗДАНИЕ АГЕНТОВ (РОЛИ)
+    # 1. СОЗДАЕМ АГЕНТОВ
     ideator = Agent(
         role="Футуролог",
-        goal="Придумать безумную, но теоретически возможную технологию будущего",
-        backstory="Ты визионер, который видит мир через 100 лет.",
-        verbose=True,  # показывает ход рассуждений/лог агента
-        allow_delegation=False,
-        llm=llm,
-    )
-
-    critic = Agent(
-        role="Злой Инвестор",
-        goal="Найти слабые места в идее Футуролога и разнести её в пух и прах",
-        backstory=(
-            "Ты прагматик, который ненавидит пустые фантазии. "
-            "Ты ищешь причины, почему это НЕ сработает."
-        ),
+        goal="Придумать невероятную технологию будущего",
+        backstory="Ты визионер. Ты генерируешь идеи, которые изменят мир.",
         verbose=True,
         allow_delegation=False,
         llm=llm,
     )
 
-    # 3. СОЗДАНИЕ ЗАДАЧ (СВЯЗЬ)
+    critic = Agent(
+        role="Скептик",
+        goal="Найти ошибки в идее Футуролога",
+        backstory="Ты строгий эксперт. Ты анализируешь риски.",
+        verbose=True,
+        allow_delegation=False,
+        llm=llm,
+    )
+
+    # 2. СОЗДАЕМ ЗАДАЧИ
     task1 = Task(
-        description="Придумай концепцию гаджета для чтения мыслей котов.",
+        description="Придумай концепцию умного ошейника для перевода языка котов на человеческий.",
         agent=ideator,
-        expected_output="Короткое описание гаджета (3-4 предложения).",
+        expected_output="Четкое описание идеи в 3 предложениях.",
     )
 
     task2 = Task(
-        description="Проанализируй идею Футуролога и напиши 3 причины, почему это провалится.",
+        description="Прочитай идею Футуролога и напиши 3 причины, почему это сложно реализовать.",
         agent=critic,
-        expected_output="Список из 3 критических замечаний.",
+        expected_output="Список из 3 рисков.",
         context=[task1],
     )
 
-    # 4. СБОРКА МОЗГА (КОМАНДА)
-    brain_crew = Crew(
+    # 3. ЗАПУСКАЕМ КОМАНДУ
+    my_crew = Crew(
         agents=[ideator, critic],
         tasks=[task1, task2],
         verbose=True,
         process=Process.sequential,
     )
 
-    # 5. ЗАПУСК
-    print("### ЗАПУСК АВТОНОМНОЙ СИСТЕМЫ ###")
-    result = brain_crew.kickoff()
+    print("### ЗАПУСК АВТОНОМНОГО ОБЩЕНИЯ ###")
+    result = my_crew.kickoff()
 
     print("\n\n########################")
-    print("## ИТОГОВЫЙ РЕЗУЛЬТАТ ##")
-    print("########################\n")
     print(result)
 
 
